@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Signup from "@/views/signup.vue"
 import Signin from "@/views/signin.vue"
 import Panehome from '@/views/panehome.vue'
+import Loadmore from '@/views/loadmore.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,7 +26,15 @@ const router = createRouter({
     path:"/home",
     name:"panelhome",
     component:Panehome
+  },
+  {
+    path:"/loadall",
+    name:"loadall",
+    component:Loadmore
   }
+
+
+
   ]
 })
 
