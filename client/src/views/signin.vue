@@ -8,6 +8,7 @@
 <h2>Sign In</h2>
 
 <div class="signupinputs">
+    <p class="error" >*Passwords Doesn't Match</p>
    <input placeholder="Username" type="text">
 
    <input placeholder="Password" type="text">
@@ -31,109 +32,12 @@ Don't Have Account? <router-link to="/signup">Sign Up</router-link>
 
 @media only screen and (max-width: 349px) {
 
-    .signupconn{
-    /* border: 2px solid red; */
-    height: 100vh;
-    padding: 10px 12px;
-}
-.logo{
-    /* border:2px solid green; */
-    height: 7%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-}
-.logo h1
+    .error
 {
     font-family: var(--majorfont);
-    font-weight: 500;
-    font-size: 1.8rem;
-}
-.signupsec{
-    /* border:2px solid purple; */
-    height: 85%;
-    display: flex;
-    align-items: center;
-    /* justify-content: center; */
-}
-
-.signupform{
-    /* border: 2px solid brown; */
-    height: 75%;
-    border-radius: 10px;
-    align-items: center;
-    background-color: var(--peach_color);
-    display: flex;
-    padding: 8px 5px;
-    flex-direction: column;
-    width: 100%;
-}
-.signupform h2
-{
-    font-family: var(--majorfont);
-    font-size: 1.5rem;
-}
-
-.signupinputs{
-    /* border: 2px solid purple; */
-    height: 87%;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    align-items: center;
-}
-.signupinputs input
-{
-    width: 92%;
-    background-color: var(--peach_color);
-    border: none;
-    border-bottom: 2px dotted black ;
-    height: 14%;
     font-size: 1rem;
-    outline: none;
-    padding: 2px 5px;
-    font-family: var(--majorfont);
-    font-family: 500;
+    color: red;
 }
-.signupinputs input::placeholder
-{
-    color: black;
-   
-}
-
-.signupinputs button{
-height:17% ;
-width: 50%;
-background-color: black;
-border: none;
-border-radius: 5px;
-color: var(--peach_color);
-font-family: var(--majorfont);
-font-size: 1rem;
-}
-.alreadyacc{
-    /* border: 2px solid blue; */
-    width: 100%;
-    height: 6%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    font-family: var(--majorfont);
-}
-.searchfilter{
-    width: 92%;
-    height: 12%;
-    /* border: 2px solid blue; */
-}
-
-
-}
-
-@media only screen and (min-width: 350px) {
-
 .signupconn{
 /* border: 2px solid red; */
 height: 100vh;
@@ -158,7 +62,7 @@ font-size: 1.8rem;
 height: 85%;
 display: flex;
 align-items: center;
-/* justify-content: center; */
+justify-content: center;
 }
 
 .signupform{
@@ -170,7 +74,115 @@ background-color: var(--peach_color);
 display: flex;
 padding: 8px 5px;
 flex-direction: column;
+width: 90%;
+}
+.signupform h2
+{
+font-family: var(--majorfont);
+font-size: 1.5rem;
+}
+
+.signupinputs{
+/* border: 2px solid purple; */
+height: 87%;
 width: 100%;
+display: flex;
+justify-content: space-around;
+flex-direction: column;
+align-items: center;
+}
+.signupinputs input
+{
+width: 92%;
+background-color: var(--peach_color);
+border: none;
+border-bottom: 2px dotted black ;
+height: 14%;
+font-size: 1rem;
+outline: none;
+padding: 2px 5px;
+font-family: var(--majorfont);
+font-family: 500;
+}
+.signupinputs input::placeholder
+{
+color: black;
+
+}
+
+.signupinputs button{
+height:17% ;
+width: 50%;
+background-color: black;
+border: none;
+border-radius: 5px;
+color: var(--peach_color);
+font-family: var(--majorfont);
+font-size: 1rem;
+}
+.alreadyacc{
+/* border: 2px solid blue; */
+width: 100%;
+height: 6%;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 1rem;
+font-family: var(--majorfont);
+}
+.searchfilter{
+width: 92%;
+height: 12%;
+/* border: 2px solid blue; */
+}
+
+
+}
+
+@media only screen and (min-width: 350px) {
+    .error
+{
+    font-family: var(--majorfont);
+    font-size: 1rem;
+    color: red;
+}
+.signupconn{
+/* border: 2px solid red; */
+height: 100vh;
+padding: 10px 12px;
+}
+.logo{
+/* border:2px solid green; */
+height: 7%;
+display: flex;
+justify-content: center;
+align-items: center;
+
+}
+.logo h1
+{
+font-family: var(--majorfont);
+font-weight: 500;
+font-size: 1.8rem;
+}
+.signupsec{
+/* border:2px solid purple; */
+height: 85%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.signupform{
+/* border: 2px solid brown; */
+height: 75%;
+border-radius: 10px;
+align-items: center;
+background-color: var(--peach_color);
+display: flex;
+padding: 8px 5px;
+flex-direction: column;
+width: 90%;
 }
 .signupform h2
 {

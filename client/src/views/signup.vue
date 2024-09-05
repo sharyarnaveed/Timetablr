@@ -40,6 +40,7 @@ const selectOption = (option) => {
 <h2>Create Account</h2>
 
 <div class="signupinputs">
+    <p class="error" >*Passwords Doesn't Match</p>
    <input placeholder="Username" type="text">
    <input placeholder="Department" type="text">
 
@@ -84,7 +85,12 @@ Already Have an Account ? <router-link to="/signin">Sign In</router-link>
 <style scoped>
 
 @media only screen and (max-width: 349px) {
-
+.error
+{
+    font-family: var(--majorfont);
+    font-size: 1rem;
+    color: red;
+}
     .signupconn{
     /* border: 2px solid red; */
     height: 100vh;
@@ -212,7 +218,12 @@ li:hover {
 }
 
 @media only screen and (min-width: 350px) {
-
+    .error
+{
+    font-family: var(--majorfont);
+    font-size: 1rem;
+    color: red;
+}
 .signupconn{
 /* border: 2px solid red; */
 height: 100vh;
