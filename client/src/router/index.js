@@ -4,6 +4,11 @@ import Signup from "@/views/signup.vue"
 import Signin from "@/views/signin.vue"
 import Panehome from '@/views/panehome.vue'
 import Loadmore from '@/views/loadmore.vue'
+import adminsignin from "@/views/admin/signin.vue"
+import admindashboard from "@/views/admin/dashboard.vue"
+import addcategory from "@/views/admin/addcategory.vue"
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -31,7 +36,23 @@ const router = createRouter({
     path:"/loadall",
     name:"loadall",
     component:Loadmore
+  },
+  {
+    path:"/adminthesignin",
+    name:"adminsignin",
+    component:adminsignin
   }
+,{
+  path:"/totheadmindashboard",
+  name:"admindashboard",
+  component:admindashboard,
+  children:[
+    {
+      path:"addcategory",
+      component:addcategory
+    }
+  ]
+}
 
 
 

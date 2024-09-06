@@ -1,13 +1,35 @@
 <script setup>
 import infocard from "@/components/infocard.vue"
 import otherclass from "@/components/otherclasscard.vue"
+// import axios from "axios";
+import api from "@/api";
 import { onMounted } from "vue";
+import router from "@/router";
+import axios from "axios";
+
+
+const getdata=async()=>
+{
+  const responce=await api.post("/api/user/home",{},{withCredentials:true});
+  console.log(responce.data);
+}
+
+const logout=async()=>
+{
+  const thelog= await axios.post("/api/user/logout")
+
+if(thelog.data.success)
+{
+  router.push("/signin")
+}
+}
 
 
 
-
-
-
+onMounted(async()=>
+{
+  await getdata()
+})
 
 
 
@@ -16,9 +38,9 @@ import { onMounted } from "vue";
   <main class="homepanelmain">
     <div class="hometop">
       
-<router-link class="logout" to="/logout">
+<button @click="logout" class="logout" >
   <img src="../assets/material-symbols_logout.svg" alt="">
-</router-link>
+</button>
       
     </div>
 
@@ -61,6 +83,8 @@ import { onMounted } from "vue";
   .logout
 {
   /* border: 2px solid pink; */
+  background-color: transparent;
+  border: none;
   width: 12%;
   height: 100%;
 }
@@ -152,7 +176,10 @@ justify-content: end;
 .logout
 {
 /* border: 2px solid pink; */
-width: 12%;
+width: 10%;
+border: none;
+background-color: transparent;
+/* border: none; */
 height: 100%;
 }
 .logout img
@@ -243,7 +270,8 @@ justify-content: end;
 .logout
 {
 /* border: 2px solid pink; */
-width: 12%;
+background-color: transparent;
+width: 5%;
 height: 100%;
 }
 .logout img

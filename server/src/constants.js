@@ -1,0 +1,1 @@
+export const DATBASE_NAME="timetablr"
