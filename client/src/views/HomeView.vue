@@ -1,4 +1,36 @@
-<script setup></script>
+<script setup>
+import { onMounted } from 'vue';
+
+let theprompt;
+onMounted(()=>
+{
+  window.addEventListener('beforeinstallprompt',(e)=>
+{
+e.preventDefault();
+theprompt=e;
+
+})
+
+
+
+})
+
+const installapp=async()=>
+{
+  if(theprompt)
+{
+  theprompt.prompt();
+  const { outcome } = await theprompt.userChoice;
+        // Optionally, log the outcome
+        console.log(`User response to the install prompt: ${outcome}`);
+        // Clear the saved prompt
+        theprompt = null;
+}
+}
+
+
+
+</script>
 <template>
   <main class="mainhomesec">
     <nav>
@@ -17,7 +49,7 @@
           </h1>
         </div>
         <div class="buttons">
-          <button class="homebuttons">Download</button>
+          <button @click="installapp" class="homebuttons">Download</button>
           <button class="homebuttons">Feedback</button>
         </div>
       </div>
