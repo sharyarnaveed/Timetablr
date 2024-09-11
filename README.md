@@ -7,3 +7,11 @@ will display only the classes occurring at that specific time, including details
 only the information pertinent to their current schedule, enhancing convenience and efficiency.]
 
 
+
+**language used**
+
+VueJs for frontend 
+ExpressJd for backend
+Sql as database
+
+
