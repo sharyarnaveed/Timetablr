@@ -1,35 +1,24 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted } from "vue";
 
 let theprompt;
-onMounted(()=>
-{
-  window.addEventListener('beforeinstallprompt',(e)=>
-{
-e.preventDefault();
-theprompt=e;
+onMounted(() => {
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    theprompt = e;
+  });
+});
 
-})
-
-
-
-})
-
-const installapp=async()=>
-{
-  if(theprompt)
-{
-  theprompt.prompt();
-  const { outcome } = await theprompt.userChoice;
-        // Optionally, log the outcome
-        console.log(`User response to the install prompt: ${outcome}`);
-        // Clear the saved prompt
-        theprompt = null;
-}
-}
-
-
-
+const installapp = async () => {
+  if (theprompt) {
+    theprompt.prompt();
+    const { outcome } = await theprompt.userChoice;
+    // Optionally, log the outcome
+    console.log(`User response to the install prompt: ${outcome}`);
+    // Clear the saved prompt
+    theprompt = null;
+  }
+};
 </script>
 <template>
   <main class="mainhomesec">

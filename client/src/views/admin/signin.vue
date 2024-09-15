@@ -1,6 +1,7 @@
 <script setup>
+import api from "@/api";
 import router from "@/router";
-import axios from "axios";
+// import axios from "axios";
 import { ref } from "vue";
 
 
@@ -14,11 +15,11 @@ const userdetails=ref({
 
 const handlesignin = async() => {
 try {
-  const responce= await axios.post("/api/admin/login",userdetails.value);
+  const responce= await api.post("/api/admin/adminlogin",userdetails.value,{withCredentials:true});
   console.log(responce.data);
-  if(responce.data.message=="Login Successfull")
+  if(responce.data.success===true)
 {
-  router.push("/adminhome")
+  router.push("/totheadmindashboard/addcategory")
 }
   console.log(responce);
 } catch (error) {
@@ -71,7 +72,7 @@ try {
   height: 100vh;
   overflow: hidden;
   width: 100%;
-  background-color: var(--blue);
+  background-color: var(--skyblue);
   display: flex;
 }
 .signinimage {
@@ -97,9 +98,9 @@ try {
   font-size: 1.1rem;
 }
 .welcome_text h1 {
-  font-family: var(--font);
-  color: white;
-  font-weight: 100;
+  font-family: var(--majorfont);
+  color: black;
+  font-weight: 300;
   margin: 0px 10%;
   letter-spacing: 3px;
 }
@@ -119,7 +120,7 @@ try {
   border-radius: 10px;
   border: none;
   outline: none;
-  font-family: var(--font);
+  font-family: var(--majorfont);
   padding: 2px 5px;
   margin: 25px 15%;
 }
@@ -132,11 +133,11 @@ try {
   border: none;
   background-color: #f0edee;
   font-size: 20px;
-  font-family: var(--font);
+  font-family: var(--majorfont);
   cursor: pointer;
 }
 .siginform_submit:hover {
-  background-color: var(--light-blue);
+  background-color: black;
   color: white;
 }
 .signup_link {
@@ -146,7 +147,7 @@ try {
 }
 .signup_link p {
   font-size: 1.07rem;
-  font-family: var(--font);
+  font-family: var(--majorfont);
   color: white;
 }
 .signup_routerlink {

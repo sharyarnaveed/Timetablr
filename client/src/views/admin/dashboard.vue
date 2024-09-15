@@ -1,5 +1,17 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import axios from "axios";
+import router from "@/router";
+const logout=async()=>
+{
+  const thelog= await axios.post("/api/admin/adminlogut")
+
+if(thelog.data.success)
+{
+  router.push("/adminthesignin")
+}
+
+}
 
 
 </script>
@@ -19,6 +31,11 @@ import { RouterLink, RouterView } from "vue-router";
               >Add Category</router-link
             >
           </li>
+          <li class="asideoptions">
+            <router-link class="optionslink" to="/totheadmindashboard/addtimetable"
+              >Add Timetable</router-link
+            >
+          </li>
           
           <li @click="logout" class="asideoptions">
             <button  type="submit" class="optionslink" to="">
@@ -29,7 +46,9 @@ import { RouterLink, RouterView } from "vue-router";
       </div>
     </aside>
     <section class="dashboardcon">
-      <div class="dashtop"></div>
+      <div class="dashtop">
+        <h1>WELCOME TO ADMIN PANEL</h1>
+      </div>
       <RouterView />
     </section>
   </main>
@@ -78,15 +97,15 @@ import { RouterLink, RouterView } from "vue-router";
   list-style: none;
   height: 10%;
   width: 90%;
-
+  background-color: var(--skyblue);
   border-radius: 5px;
 
-  background-color: red;
+  /* background-color: red; */
 }
 .optionslink {
   font-size: 1.2rem;
   font-family: var(--font);
-  border: 2px solid var(--light-blue);
+  border: 2px solid var(--violet);
   border-radius: 5px;
   color: black;
   width: 100%;
@@ -96,15 +115,23 @@ import { RouterLink, RouterView } from "vue-router";
   padding: 10px 20px;
 }
 .optionslink:hover {
-  background-color: var(--light-blue);
-  border: 2px solid red;
+  background-color: var(--violet);
+  /* border: 2px solid red; */
 }
 .dashboardcon {
   /* border: 2px solid green; */
   width: 80%;
 }
 .dashtop {
-  /* border: 2px solid red; */
+  border: 2px solid red;
   height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+.dashtop h1
+{
+  font-family: var(--majorfont);
 }
 </style>

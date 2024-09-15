@@ -141,7 +141,7 @@ res
     else
     {
       res.json({
-        message:"Username Not found",
+        message:"User Not found",
         success:false
       })
     }
