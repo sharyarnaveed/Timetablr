@@ -73,11 +73,12 @@ const addprogram = async (req, res) => {
       // Create table only if program insertion is successful
       const tablesql = `
                 CREATE TABLE ${programname} (
-                    program_id INT AUTO_INCREMENT PRIMARY KEY,
+                    class_id INT AUTO_INCREMENT PRIMARY KEY,
                     subject VARCHAR(255),
                     teacher_name VARCHAR(255),
-                    start_time VARCHAR(255),
-                    end_time VARCHAR(255)
+                    day VARCHAR(255),
+                    time VARCHAR(255),
+                    venu VARCHAR(255)
                 )
             `;
       // Create the table
@@ -148,8 +149,12 @@ const timatble=async(req,res)=>
 {
   try {
     const rows=req.body;
-rows.forEach(element => {
+    const thedb = await connectdb();
+await rows.forEach(async element => {
   console.log(element);
+  const sql = `INSERT INTO SE22_RED (SUBJECT,TEACHER_NAME,DAY,TIME,VENU) VALUES (?,?,?,?,?)`;
+  const [success] = await thedb.query(sql, [element.subject,element.teacher,element.days,element.time,element.venu]);
+console.log(success);
 });
     
 // console.log(rows);
