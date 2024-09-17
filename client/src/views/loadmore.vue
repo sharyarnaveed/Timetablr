@@ -2,25 +2,35 @@
     
     <main class="loadmoremain">
         <router-link class="backrouter" to="/home"><- Back</router-link>
-<Otherclasscard class="comp"/>
-<Otherclasscard class="comp"/>
-<Otherclasscard class="comp"/>
-<Otherclasscard class="comp"/>
-<Otherclasscard class="comp"/>
-<Otherclasscard class="comp"/>
-<Otherclasscard class="comp"/>
-<Otherclasscard class="comp"/>
 
-
-
-
-
+<Otherclasscard class="comp"/>
     </main>
 </template>
 
 <script setup>
 import Otherclasscard from '@/components/otherclasscard.vue';
+import { useTimetableStore } from '@/stores/timtable';
+import { computed, onMounted } from 'vue';
 // import otherclasscard from '@/components/otherclasscard.vue';
+
+const timetable=useTimetableStore();
+const classes=timetable.classes;
+const currentclass=timetable.currentClass;
+
+onMounted(()=>
+{
+const nocurrent=computed(()=>
+{
+    return classes.filter(classcheck=> classcheck!==currentclass);
+
+})
+
+console.log(nocurrent.value);
+// console.log(classes);
+})
+
+//  console.log(nocurrentclass);
+
 </script>
 
 <style scoped>

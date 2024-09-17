@@ -77,7 +77,8 @@ const addprogram = async (req, res) => {
                     subject VARCHAR(255),
                     teacher_name VARCHAR(255),
                     day VARCHAR(255),
-                    time VARCHAR(255),
+                    start_time VARCHAR(255),
+                    end_time VARCHAR(255),
                     venu VARCHAR(255)
                 )
             `;
@@ -151,10 +152,10 @@ const timatble=async(req,res)=>
     const rows=req.body;
     const thedb = await connectdb();
 await rows.forEach(async element => {
-  console.log(element);
-  const sql = `INSERT INTO SE22_RED (SUBJECT,TEACHER_NAME,DAY,TIME,VENU) VALUES (?,?,?,?,?)`;
-  const [success] = await thedb.query(sql, [element.subject,element.teacher,element.days,element.time,element.venu]);
-console.log(success);
+  // console.log(element);
+  const sql = `INSERT INTO SE22_RED (SUBJECT,TEACHER_NAME,DAY,start_time,end_time,VENU) VALUES (?,?,?,?,?,?)`;
+  const [success] = await thedb.query(sql, [element.subject,element.teacher,element.days,element.start_time,element.end_time,element.venu]);
+// console.log(success);
 });
     
 // console.log(rows);

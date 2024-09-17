@@ -44,10 +44,11 @@ const handleexcel = async (e) => {
         // Create a new object for each row
         const rowData = {
           days: row[0] || "",
-          time: row[1] || "",
-          subject: row[2] || "",
-          teacher: row[3] || "",
-          venu: row[4] || ""
+          start_time: row[1] || "",
+          end_time: row[2] || "",
+          subject: row[3] || "",
+          teacher: row[4] || "",
+          venu: row[5] || ""
         };
 
         allRows.push(rowData);

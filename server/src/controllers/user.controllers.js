@@ -1,6 +1,7 @@
 import connectdb from "../database/dbconn.database.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
 const signupuser = async (req, res) => {
   try {
     const { username, department, program, password } = req.body;
@@ -30,8 +31,8 @@ const signupuser = async (req, res) => {
         const [rows] = await thedb.query(sql, [
           username,
           hashedpassword,
-          program,
           department,
+          program,
         ]);
         res.status(200).json({
           message: "Account Created",
@@ -45,14 +46,7 @@ const signupuser = async (req, res) => {
   }
 };
 
-/*
-check if fields are empty
-compare pass and username
-generate jwt token
-send token back to user
 
-
-*/
 
 const signinuser=async(req,res)=>
 {
@@ -160,13 +154,33 @@ res
 const gethomedata=async(req,res)=>
 {
   try {
-    // res.json("helo")
+  
 
 const user=req.user
-res.json(user)
+console.log(user.program);
+const {day}=req.body;
+
+
+// // get user program
+const thedb= await connectdb();
+
+
+
+
+  const TimetableQuery= `SELECT * from ${user.program} WHERE day = ?`;
+  const [GetTimeTable]= await thedb.query(TimetableQuery,[day]);
+
+  console.log(GetTimeTable);
+
+  res.json(GetTimeTable)
+
+
+
+
+
 
   } catch (error) {
-    
+    console.log("error Getting timetable data",error);
   }
 }
 
