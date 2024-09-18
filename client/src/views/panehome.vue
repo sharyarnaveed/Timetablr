@@ -1,13 +1,15 @@
 <script setup>
 import infocard from "@/components/infocard.vue";
-import otherclass from "@/components/otherclasscard.vue";
+import otherclass from "@/components/otehrcardformhome.vue";
 import { useTimetableStore } from "@/stores/timtable";
 import api from "@/api";
 import { onMounted, ref } from "vue";
 import router from "@/router";
 import axios from "axios";
 const usetimetable = useTimetableStore();
-const Currentclassfront = ref({});
+
+
+
 
 const theday = ref({
   day: "",
@@ -44,6 +46,9 @@ onMounted(async () => {
   usetimetable.setClasses(fetcheddata);
 
   usetimetable.findCurrentClass();
+  usetimetable.findnotcurrent();
+  
+
 });
 </script>
 <template>
@@ -72,9 +77,9 @@ onMounted(async () => {
         >
       </div>
 
-      <div class="laterconn">
-        <otherclass />
-        <otherclass />
+      <div v-if="usetimetable.notcurrentclass" class="laterconn">
+        <otherclass  />
+        <!-- <otherclass /> -->
 
         <!-- <infocard/> -->
       </div>

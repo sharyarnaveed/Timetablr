@@ -2,25 +2,29 @@
     <div back class="currentconnlater">
       <h5 id="subject">
         Subject:
-        <p>{{ prop.notclass.subject }}</p>
+         <p>{{ subject }}</p>
       </h5>
-      <h5>
+   <h5>
         Venu:
-        <p>{{ prop.notclass.venu }}</p>
+        <p>{{ venu }}</p>
       </h5>
       <h5>
         Time:
-        <p>{{ convstartime }} - {{ convendtime }}</p>
-      </h5>
+        <p>{{ starttime }} - {{ endtime }}</p>  
+      </h5> -
 
     </div>
   </template>
   
   <script setup>
-  import { ref } from 'vue';
-const prop=defineProps({
-  notclass:Object
-})
+import { useTimetableStore } from '@/stores/timtable';
+import { onMounted, ref } from 'vue';
+const noclass=ref({});
+const subject=ref("")
+const venu=ref("")
+const starttime=ref(0)
+const endtime=ref(0)
+
 const converttime = (time) => {
   const totalMinutes = time * 60 * 24;
 
@@ -34,15 +38,25 @@ const converttime = (time) => {
   return `${hours}:${minutes}`;
   // console.log(time);
 };
-const starttime = ref(0);
-const endtime = ref(0);
-const convstartime = ref("");
-const convendtime = ref("");
 
-starttime.value = prop.notclass.start_time;
-endtime.value = prop.notclass.end_time;
-convstartime.value = converttime(starttime.value);
-  convendtime.value = converttime(endtime.value);
+
+
+ onMounted(()=>
+{
+    const usetimetable=useTimetableStore();
+ 
+
+noclass.value=usetimetable.notcurrentclass[0];
+// console.log(noclass.value);
+subject.value=noclass.value.subject
+venu.value=noclass.value.venu
+starttime.value=converttime(noclass.value.start_time)
+endtime.value=converttime(noclass.value.end_time)
+})
+
+
+
+
 
 
 

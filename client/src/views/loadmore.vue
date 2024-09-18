@@ -1,32 +1,63 @@
 <template>
     
     <main class="loadmoremain">
-        <router-link class="backrouter" to="/home"><- Back</router-link>
+      <div class="router">
 
-<Otherclasscard class="comp"/>
+          <router-link class="backrouter" to="/home"><- Back</router-link>
+      </div>
+      
+<div  class="notclasscon">
+
+    <Otherclasscard v-for="notclass in notcurrentclass" :key="notclass.class_id" :notclass="notclass" class="comp"/>
+    
+  
+
+</div>
     </main>
 </template>
 
 <script setup>
+import api from '@/api';
 import Otherclasscard from '@/components/otherclasscard.vue';
 import { useTimetableStore } from '@/stores/timtable';
-import { computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 // import otherclasscard from '@/components/otherclasscard.vue';
 
 const timetable=useTimetableStore();
-const classes=timetable.classes;
-const currentclass=timetable.currentClass;
+const notcurrentclass=ref({})
+const theday = ref({
+  day: "",
+});
 
-onMounted(()=>
+
+
+const getdata = async (day) => {
+  // console.log(day);
+  theday.value.day = day;
+//   console.log(theday.value.day);
+  const responce = await api.post("/api/user/home", theday.value, {
+    withCredentials: true,
+  });
+  // console.log(responce.data);
+  return responce.data;
+};
+
+
+
+onMounted(async()=>
 {
-const nocurrent=computed(()=>
-{
-    return classes.filter(classcheck=> classcheck!==currentclass);
+    const today = new Date();
+  const dayName = today.toLocaleDateString("en-US", { weekday: "long" });
+  // console.log(dayName);
+    const fetcheddata = await getdata(dayName);
 
-})
+  timetable.setClasses(fetcheddata);
 
-console.log(nocurrent.value);
-// console.log(classes);
+//   usetimetable.findCurrentClass();
+timetable.findnotcurrent();
+notcurrentclass.value=timetable.notcurrentclass
+console.log(notcurrentclass.value);
+
 })
 
 //  console.log(nocurrentclass);
@@ -36,14 +67,19 @@ console.log(nocurrent.value);
 <style scoped>
 
 @media only screen and (max-width: 349px) {
-
+.notclasscon{
+    /* border: 2px solid red; */
+    height: 100vh;
+    overflow-y: auto;
+    padding: 10px 15px;
+    /* margin-top: -//px ; */
+}
     .loadmoremain{
     /* border: 2px solid red; */
     height: 100vh;
     overflow-y: auto;
     display: flex;
     /* gap: 2%; */
-    padding: 10px 15px;
     flex-direction: column;
     justify-content: space-evenly;
     /* align-items: center; */
@@ -54,18 +90,35 @@ console.log(nocurrent.value);
     height: 120px;
     padding: 10px 10px;
 }
-.backrouter{
+.router{
+    
+    /* border: 2px solid green; */
+    height: 50px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 5px 10px;
+}
+.backrouter
+{
     font-size: 1.1rem;
     font-family: var(--majorfont);
     color: black;
+    /* border: 2px solid blue; */
 }
-
 }
 
 
 
 @media only screen and (min-width: 350px) {
 
+    .notclasscon{
+    /* border: 2px solid red; */
+    height: 100vh;
+    overflow-y: auto;
+    padding: 10px 15px;
+    /* margin-top: -//px ; */
+}
 .loadmoremain{
 /* border: 2px solid red; */
 height: 100vh;
@@ -88,6 +141,21 @@ font-size: 1.1rem;
 font-family: var(--majorfont);
 color: black;
 }
-
+.router{
+    
+    /* border: 2px solid green; */
+    height: 50px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 5px 10px;
+}
+.backrouter
+{
+    font-size: 1.1rem;
+    font-family: var(--majorfont);
+    color: black;
+    /* border: 2px solid blue; */
+}
 }
 </style>
