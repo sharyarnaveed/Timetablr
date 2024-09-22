@@ -1,15 +1,24 @@
 <script setup>
-import infocard from "@/components/infocard.vue";
-import otherclass from "@/components/otehrcardformhome.vue";
+import { defineAsyncComponent } from "vue";
+
+const infocard = defineAsyncComponent(() =>
+  import("@/components/infocard.vue")
+);
+
+const otherclass = defineAsyncComponent(() =>
+  import("@/components/otehrcardformhome.vue")
+);
 import { useTimetableStore } from "@/stores/timtable";
 import api from "@/api";
 import { onMounted, ref } from "vue";
 import router from "@/router";
 import axios from "axios";
 const usetimetable = useTimetableStore();
-
-
-
+const noclass = ref({});
+const subject = ref("");
+const venu = ref("");
+const starttime = ref(0);
+const endtime = ref(0);
 
 const theday = ref({
   day: "",
@@ -21,7 +30,7 @@ const getdata = async (day) => {
   const responce = await api.post("/api/user/home", theday.value, {
     withCredentials: true,
   });
-  // console.log(responce.data);
+
   return responce.data;
 };
 
@@ -34,21 +43,24 @@ const logout = async () => {
   }
 };
 
-
-
-
 onMounted(async () => {
   const today = new Date();
   const dayName = today.toLocaleDateString("en-US", { weekday: "long" });
-  // console.log(dayName);
 
   const fetcheddata = await getdata(dayName);
-  usetimetable.setClasses(fetcheddata);
+  await usetimetable.setClasses(fetcheddata);
 
-  usetimetable.findCurrentClass();
-  usetimetable.findnotcurrent();
-  
+  await usetimetable.findCurrentClass();
+  await usetimetable.findnotcurrent();
+  if (usetimetable.notcurrentclass.length > 0) {
+    console.log(usetimetable.notcurrentclass[0]);
+    noclass.value = usetimetable.notcurrentclass[0];
+    subject.value = noclass.value.subject;
+    venu.value = noclass.value.venu;
 
+    starttime.value = noclass.value.start_time;
+    endtime.value = noclass.value.end_time;
+  }
 });
 </script>
 <template>
@@ -77,12 +89,22 @@ onMounted(async () => {
         >
       </div>
 
-      <div v-if="usetimetable.notcurrentclass" class="laterconn">
-        <otherclass  />
-        <!-- <otherclass /> -->
+      <div class="laterconn">
+        <!-- <otherclass
+          v-if="usetimetable.notcurrentclass.length"
+          :subject="subject"
+          :venu="venu"
+          :starttime="starttime"
+          :endtime="endtime"
+        />
+        <h2 class="noclasstext" v-else>No Next Class</h2> -->
+      
+      <otherclass/>
+    </div>
+<div class="speeddailcon">
+  speed dail
+</div>
 
-        <!-- <infocard/> -->
-      </div>
     </div>
   </main>
 </template>
@@ -147,15 +169,15 @@ onMounted(async () => {
   }
 
   .laterconn {
-    /* border: 2px solid purple; */
+    border: 2px solid purple;
     display: flex;
     justify-content: space-around;
     flex-direction: column;
-    height: 100%;
+    height: 60%;
   }
 
   .bottomtable {
-    /* border: 2px solid purple; */
+    border: 2px solid purple;
     height: 50%;
     display: flex;
     flex-direction: column;
@@ -163,17 +185,20 @@ onMounted(async () => {
   .loadall {
     /* border: 2px solid red; */
     height: 10%;
+    display: flex;
+    justify-content: end;
   }
 
   .loadallrouterlink {
     font-size: 1.1rem;
     color: black;
+    /* border: 2px solid green; */
+    width: 32%;
     font-family: var(--majorfont);
-    display: flex;
-    justify-content: end;
+
   }
 
-  .speeddiler {
+  .speeddailcon {
     border: 2px solid red;
     height: 35%;
   }
@@ -255,14 +280,17 @@ onMounted(async () => {
   .loadall {
     /* border: 2px solid red; */
     height: 10%;
+    display: flex;
+    justify-content: end;
   }
 
   .loadallrouterlink {
     font-size: 1.1rem;
     color: black;
+    /* border: 2px solid green; */
+    width: 32%;
     font-family: var(--majorfont);
-    display: flex;
-    justify-content: end;
+
   }
 
   .speeddiler {
