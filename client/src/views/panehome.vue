@@ -90,21 +90,18 @@ onMounted(async () => {
       </div>
 
       <div class="laterconn">
-        <!-- <otherclass
+        <otherclass
           v-if="usetimetable.notcurrentclass.length"
           :subject="subject"
           :venu="venu"
           :starttime="starttime"
           :endtime="endtime"
         />
-        <h2 class="noclasstext" v-else>No Next Class</h2> -->
-      
-      <otherclass/>
-    </div>
-<div class="speeddailcon">
-  speed dail
-</div>
+        <h2 class="noclasstext" v-else>No Next Class</h2>
 
+        <!-- <otherclass/> -->
+      </div>
+      <div class="speeddailcon">speed dail</div>
     </div>
   </main>
 </template>
@@ -195,7 +192,6 @@ onMounted(async () => {
     /* border: 2px solid green; */
     width: 32%;
     font-family: var(--majorfont);
-
   }
 
   .speeddailcon {
@@ -290,7 +286,6 @@ onMounted(async () => {
     /* border: 2px solid green; */
     width: 32%;
     font-family: var(--majorfont);
-
   }
 
   .speeddiler {

@@ -11,6 +11,7 @@ async function sendtobackend(data) {
   try {
     const response = await axios.post("/api/admin/timetable", data);
     console.log('Data sent to backend:', data);
+    console.log(response);
   } catch (error) {
     console.log("Error sending data to backend:", error);
   }
