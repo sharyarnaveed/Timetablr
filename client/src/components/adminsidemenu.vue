@@ -1,6 +1,8 @@
 <template>
   <aside class="aside">
-    <div class="logo">logo</div>
+    <div class="logo">
+      <h1><b>Timetablr</b></h1>
+    </div>
     <ul class="optioncoono">
       <li class="asideoptions">
         <router-link class="optionslink" to="/totheadmindashboard">
@@ -70,7 +72,7 @@ function toggle() {
   justify-content: space-around;
 }
 .logo {
-  border: 2px solid purple;
+  /* border: 2px solid purple; */
   height: 20%;
 }
 .optioncoono {
@@ -147,5 +149,17 @@ function toggle() {
 
 .dropdown:hover {
   background-color: var(--violet);
+}
+.logo
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo h1
+{
+  font-family: var(--majorfont);
+    font-size: 2.2rem;
+    font-weight: 300;
 }
 </style>

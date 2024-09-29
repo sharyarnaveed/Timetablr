@@ -6,7 +6,7 @@
     </h5>
     <h5>
       Venu:
-      <p>{{ venu }}</p>
+      <p>{{ prop.venu }}</p>
     </h5>
     <h5>
       Time:
@@ -18,8 +18,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
-const starttimecard = ref(0);
-const endtimecard = ref(0);
+const starttimecard = ref('');
+const endtimecard = ref('');
 
 const converttime = (time) => {
   const totalMinutes = time * 60 * 24;
@@ -37,12 +37,17 @@ const converttime = (time) => {
 const prop = defineProps({
   subject: String,
   venu: String,
-  starttime: String,
-  endtime: String,
+  starttime: [Number,String],
+  endtime:[Number,String], 
 });
 
-starttimecard.value = converttime(prop.starttime);
-endtimecard.value = converttime(prop.endtime);
+onMounted(async()=>
+{
+
+  starttimecard.value = await converttime(prop.starttime);
+  endtimecard.value = await converttime(prop.endtime);
+})
+
 </script>
 
 <style scoped>

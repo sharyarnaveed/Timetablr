@@ -1,6 +1,6 @@
 <script setup>
 import { defineAsyncComponent } from "vue";
-
+import Speeddail from "@/components/speeddail.vue"
 const infocard = defineAsyncComponent(() =>
   import("@/components/infocard.vue")
 );
@@ -61,11 +61,16 @@ onMounted(async () => {
     starttime.value = noclass.value.start_time;
     endtime.value = noclass.value.end_time;
   }
+  
 });
 </script>
 <template>
   <main class="homepanelmain">
     <div class="hometop">
+      <router-link to="/settings" class="settings">
+        <img src="../assets/Settings.svg" alt="" />
+      </router-link>
+
       <button @click="logout" class="logout">
         <img src="../assets/material-symbols_logout.svg" alt="" />
       </button>
@@ -101,25 +106,43 @@ onMounted(async () => {
 
         <!-- <otherclass/> -->
       </div>
-      <div class="speeddailcon">speed dail</div>
+      <div class="speeddailcon">
+
+        <Speeddail/>
+      </div>
     </div>
   </main>
 </template>
 
 <style scoped>
 @media only screen and (max-width: 349px) {
+  .settings {
+    /* border: 2px solid red; */
+    height: 100%;
+    width: 12%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .settings img {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .noclasstext {
     font-family: var(--majorfont);
   }
   .logout {
-    /* border: 2px solid pink; */
+    /* border: 2px solid red;/ */
     background-color: transparent;
     border: none;
     width: 12%;
     height: 100%;
   }
   .logout img {
-    height: 78%;
+    height: 69%;
   }
   .homepanelmain {
     /* border: 2px solid red; */
@@ -133,8 +156,8 @@ onMounted(async () => {
     /* border: 2px solid purple; */
     height: 8%;
     display: flex;
-    justify-content: end;
-
+    justify-content: space-between;
+    padding: 2px 2px;
     align-items: center;
   }
   .headingandcurrent {
@@ -166,7 +189,7 @@ onMounted(async () => {
   }
 
   .laterconn {
-    border: 2px solid purple;
+    /* border: 2px solid purple; */
     display: flex;
     justify-content: space-around;
     flex-direction: column;
@@ -174,7 +197,7 @@ onMounted(async () => {
   }
 
   .bottomtable {
-    border: 2px solid purple;
+    /* border: 2px solid purple; */
     height: 50%;
     display: flex;
     flex-direction: column;
@@ -195,8 +218,11 @@ onMounted(async () => {
   }
 
   .speeddailcon {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     height: 35%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
   }
 }
 
@@ -213,7 +239,19 @@ onMounted(async () => {
     height: 100%;
   }
   .logout img {
-    height: 78%;
+    height: 71%;
+  }
+  .settings {
+    /* border: 2px solid red; */
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .settings img {
+    height: 100%;
+    width: 100%;
   }
   .homepanelmain {
     /* border: 2px solid red; */
@@ -227,7 +265,7 @@ onMounted(async () => {
     /* border: 2px solid purple; */
     height: 8%;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
 
     align-items: center;
   }
@@ -292,6 +330,13 @@ onMounted(async () => {
     border: 2px solid red;
     height: 35%;
   }
+  .speeddailcon {
+    /* border: 2px solid red; */
+    height: 35%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
 }
 
 @media only screen and (min-width: 576px) {
@@ -303,6 +348,18 @@ onMounted(async () => {
   }
   .logout img {
     height: 78%;
+  }
+  .settings {
+    /* border: 2px solid red; */
+    height: 100%;
+    width: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .settings img {
+    height: 100%;
+    width: 100%;
   }
   .homepanelmain {
     /* border: 2px solid red; */
@@ -316,7 +373,7 @@ onMounted(async () => {
     /* border: 2px solid purple; */
     height: 8%;
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
 
     align-items: center;
   }
