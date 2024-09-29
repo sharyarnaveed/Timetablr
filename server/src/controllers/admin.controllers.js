@@ -152,10 +152,10 @@ const timatble=async(req,res)=>
     const rows=req.body;
     const thedb = await connectdb();
 await rows.forEach(async element => {
-  // console.log(element);
+  console.log(element);
   const sql = `INSERT INTO SE22_RED (SUBJECT,TEACHER_NAME,DAY,start_time,end_time,VENU) VALUES (?,?,?,?,?,?)`;
   const [success] = await thedb.query(sql, [element.subject,element.teacher,element.days,element.start_time,element.end_time,element.venu]);
-// console.log(success);
+console.log(success);
 });
     
 // console.log(rows);
