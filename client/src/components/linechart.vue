@@ -26,8 +26,8 @@
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
       {
-        label: 'Sales Data',
-        data: [65, 59, 80, 81, 56, 55, 40],
+        label: 'Users Data',
+        data: [10, 59, 40, 81, 46, 55, 30],
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1,
@@ -45,13 +45,11 @@
       },
       title: {
         display: true,
-        text: 'Sales Over Time',
+        text: 'Accounts Created',
       },
     },
   })
   </script>
   
-  <style scoped>
-  /* Add any styles for your chart here */
-  </style>
+
   

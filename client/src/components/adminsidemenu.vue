@@ -1,89 +1,81 @@
 <template>
-    <aside class="aside">
-      
-     
-        
+  <aside class="aside">
+    <div class="logo">logo</div>
+    <ul class="optioncoono">
+      <li class="asideoptions">
+        <router-link class="optionslink" to="/totheadmindashboard">
+          <img src="@/assets/dashboard.svg" alt="" />
+          Dashboard</router-link
+        >
+      </li>
 
-       <div class="logo">
-        logo
-       </div> 
-        <ul class="optioncoono">
-          <li class="asideoptions">
-             <router-link class="optionslink" to="/totheadmindashboard">
-                <img src="@/assets/dashboard.svg" alt="">
-                Dashboard</router-link> 
-          </li>
-          
-          <li class="asideoptions">
-            
-          <button  @click="toggle" style=" cursor: pointer; " class="optionslink">
-            <img src="@/assets/class.svg" alt=""> Classes 
- 
-  </button>
-  <div v-show="dropdown" class="dropdown-container">
-    
-    <router-link class="dropdown" to="/totheadmindashboard">
-                
-                Add Class</router-link> 
-                <router-link class="dropdown" to="/totheadmindashboard">
-               
-                View Classes</router-link> 
-  </div>
-          </li>
+      <li class="asideoptions">
+        <button @click="toggle" style="cursor: pointer" class="optionslink">
+          <img src="@/assets/class.svg" alt="" /> Add Info
+        </button>
+        <div v-show="dropdown" class="dropdown-container">
+          <router-link class="dropdown" to="/totheadmindashboard/addcategory">
+            Add Class</router-link
+          >
+          <router-link class="dropdown" to="/totheadmindashboard">
+            Add Teacher</router-link
+          >
+          <router-link class="dropdown" to="/totheadmindashboard">
+            Add Course</router-link
+          >
+          <router-link class="dropdown" to="/totheadmindashboard">
+            Add Class Rooms</router-link
+          >
 
+          <router-link class="dropdown" to="/totheadmindashboard">
+            Add Timetable</router-link
+          >
+        </div>
+      </li>
 
-          
-          <li class="asideoptions">
-            <router-link class="optionslink" to="/totheadmindashboard/addtimetable"
-              >Add Timetable</router-link
-            >
-          </li>
-          
-          <li @click="logout"  class="asideoptions">
-            <button style=" cursor: pointer; "  type="submit" class="optionslink" to="">
-              Log Out
-            </button>
-          </li>
-        </ul>
+      <li class="asideoptions">
+        <router-link class="optionslink" to="/totheadmindashboard/addtimetable"
+          >
+          <img src="@/assets/people.svg" alt="" />
+          Gen Timetable</router-link
+        >
+      </li>
 
-
- 
-        
-
-    </aside>
+      <li @click="logout" class="asideoptions">
+        <button style="cursor: pointer" type="submit" class="optionslink" to="">
+          Log Out
+        </button>
+      </li>
+    </ul>
+  </aside>
 </template>
 
 <script setup>
+import { ref } from "vue";
 
+const dropdown = ref(false);
 
-import { ref } from 'vue';
-
-const dropdown=ref(false)
-
-function toggle()
-{
-    dropdown.value=!dropdown.value;
+function toggle() {
+  dropdown.value = !dropdown.value;
 }
-
 </script>
 
 <style scoped>
-.aside{
-    border: 2px solid green;
-    width: 20%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-justify-content: space-around;
+.aside {
+  /* border: 2px solid green; */
+  width: 20%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
-.logo
-{
-    border: 2px solid purple;
-    height: 20%;
+.logo {
+  border: 2px solid purple;
+  height: 20%;
 }
-.optioncoono{
-    height: 80%;
-    border: 2px solid blue;
+.optioncoono {
+  height: 80%;
+  /* border: 2px solid blue; */
 }
 .optioncoono {
   /* border: 2px solid green; */
@@ -104,7 +96,6 @@ justify-content: space-around;
   /* background-color: red; */
 }
 .optionslink {
- 
   font-family: var(--majorfont);
   border: 2px solid var(--violet);
   border-radius: 5px;
@@ -120,44 +111,41 @@ justify-content: space-around;
   background-color: var(--violet);
   /* border: 2px solid red; */
 }
-.optionslink
-{
-    /* border: 2px solid red; */
-    display: flex;
-    gap: 5%;
-    font-size: 1.3rem;
-    text-decoration: none;
+.optionslink {
+  /* border: 2px solid red; */
+  display: flex;
+  gap: 5%;
+  font-size: 1.3rem;
+  text-decoration: none;
 }
-.dropdown-container{
-    /* border: 2px solid green; */
-    position: relative;
-     z-index: 2 ;
-     justify-content: space-around;
-     height: 110px;
-     background-color: rgba(0, 0, 0, 0.404);
-     display: flex;
-     flex-direction: column;
-     padding: 3px 8px;
+.dropdown-container {
+  /* border: 2px solid green; */
+  position: relative;
+  z-index: 2;
+  justify-content: space-around;
+  height: 240px;
+  background-color: rgba(0, 0, 0, 0.404);
+  display: flex;
+  flex-direction: column;
+  padding: 3px 8px;
 }
-.dropdown{
-    /* border: 2px solid blue; */
-    /* z-index: 2; */
-    height: 42%;
-    display: flex;
-    text-decoration: none;
-    color: black;
-    font-family: var(--majorfont);
-    justify-content: center;
-    align-items: center;
-    font-size: 1.3rem;
-    border-radius: 5px;
-    background-color: var(--skyblue);
+.dropdown {
+  /* border: 2px solid blue; */
+  /* z-index: 2; */
+  height: 20%;
+  display: flex;
+  text-decoration: none;
+  color: black;
+  margin: 5px 2px;
+  font-family: var(--majorfont);
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  border-radius: 5px;
+  background-color: var(--skyblue);
 }
 
-
-.dropdown:hover
-{
-    background-color: var(--violet);
+.dropdown:hover {
+  background-color: var(--violet);
 }
 </style>
-
