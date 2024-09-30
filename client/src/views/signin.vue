@@ -67,7 +67,7 @@ const handlesubmit = async () => {
   </main>
 </template>
 
-<style scoped>
+<style>
 @media only screen and (max-width: 349px) {
   .error {
     font-family: var(--majorfont);

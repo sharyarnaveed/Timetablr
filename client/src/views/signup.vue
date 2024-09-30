@@ -26,6 +26,7 @@ const filteredOptions = ref([]);
 const showOptions = ref(false);
 
 const signupdata = ref({
+  fullname:"",
   username: "",
   department: "",
   program: "",
@@ -57,7 +58,13 @@ const handlesubmit = async () => {
       const response = await axios.post("/api/user/signup", signupdata.value);
       console.log(response.data);
       if (response.data.success) {
-        router.push("/signin");
+        errorresponce.value="Account Has Been Created Successfully";
+        
+        setTimeout(() => {
+          
+          router.push("/signin");
+        }, 3000);
+
       } else {
         errorresponce.value = response.data.message || "An error occurred";
         error.value = true;
@@ -83,6 +90,15 @@ const handlesubmit = async () => {
 
         <div class="signupinputs">
           <p v-if="error" class="error">{{ errorresponce }}</p>
+          <input
+            required
+            v-model="signupdata.fullname"
+            placeholder="Full Name"
+            type="text"
+           pattern="^[A-Za-z ]+$"
+            title="Symbols are not allowed"
+          />
+     
           <input
             required
             v-model="signupdata.username"

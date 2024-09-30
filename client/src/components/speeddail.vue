@@ -6,8 +6,7 @@
   
       <transition-group name="slide" tag="ul" class="speed-dial-options">
         <router-link to="/" v-show="isOpen" :key="1" class="speed-dial-item">FeedBack</router-link>
-        <router-link to="/" v-show="isOpen" :key="2" class="speed-dial-item">Add Subject</router-link>
-        <router-link to="/" v-show="isOpen" :key="3" class="speed-dial-item">Dark Mode</router-link>
+        
       </transition-group>
     </div>
   </template>
@@ -77,6 +76,8 @@
   padding: 10px 15px;
   border-radius: 5px;
   margin-bottom: 10px;
+  text-decoration: none;
+  font-family: var(--majorfont);
   cursor: pointer;
   opacity: 0;
   transform: translateY(20px);

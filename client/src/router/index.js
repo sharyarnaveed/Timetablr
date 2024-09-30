@@ -10,6 +10,7 @@ import addcategory from "@/views/admin/addcategory.vue"
 import addtimetable from "@/views/admin/addtimetabele.vue"
 // import Dashboard from '@/views/admin/dashboard.vue'
 import adminhome from "@/views/admin/adminhome.vue"
+import Settings from '@/views/settings.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -42,6 +43,11 @@ const router = createRouter({
     path:"/adminthesignin",
     name:"adminsignin",
     component:adminsignin
+  },
+  {
+    path:"/settings",
+    name:"settings",
+    component:Settings
   }
 ,{
   path:"/totheadmindashboard",

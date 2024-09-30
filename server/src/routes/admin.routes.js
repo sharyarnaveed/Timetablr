@@ -9,7 +9,7 @@ const router=Router();
 
 
 router.route("/addprogram").post(adminverifyjwt,addprogram)
-router.route("/getprogramfromdb").get(adminverifyjwt,getprogram)
+router.route("/getprogramfromdb").get(getprogram)
 router.route("/adminlogin").post(adminsigin)
 router.route("/adminlogut").post(adminverifyjwt,logout)
 router.route("/timetable").post(timatble)
