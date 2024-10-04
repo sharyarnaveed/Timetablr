@@ -19,7 +19,7 @@ const subject = ref("");
 const venu = ref("");
 const starttime = ref(0);
 const endtime = ref(0);
-
+const username=ref()
 const theday = ref({
   day: "",
 });
@@ -30,9 +30,13 @@ const getdata = async (day) => {
   const responce = await api.post("/api/user/home", theday.value, {
     withCredentials: true,
   });
-
-  return responce.data;
+console.log(responce.data.username[0])
+username.value=responce.data.username[0].USERNAME
+  return responce.data.timetable;
 };
+
+
+
 
 // for the logout
 const logout = async () => {
@@ -68,7 +72,9 @@ onMounted(async () => {
   <main class="homepanelmain">
     <div class="hometop">
       <router-link to="/settings" class="settings">
-        <img src="../assets/Settings.svg" alt="" />
+        <img style="width: 30px; height: 30px;" src="../assets/profile.png" alt="" />
+     <p style="color: black; font-family: var(--majorfont);">{{ username }}</p>   
+
       </router-link>
 
       <button @click="logout" class="logout">
@@ -117,9 +123,10 @@ onMounted(async () => {
 <style scoped>
 @media only screen and (max-width: 349px) {
   .settings {
-    /* border: 2px solid red; */
+    border: 2px solid red;
     height: 100%;
-    width: 12%;
+    width: 45%;
+    gap: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -244,7 +251,8 @@ onMounted(async () => {
   .settings {
     /* border: 2px solid red; */
     height: 100%;
-    width: 10%;
+    width: 40%;
+gap: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -352,7 +360,7 @@ onMounted(async () => {
   .settings {
     /* border: 2px solid red; */
     height: 100%;
-    width: 5%;
+    width: 35%;
     display: flex;
     justify-content: center;
     align-items: center;

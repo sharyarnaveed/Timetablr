@@ -117,6 +117,29 @@ const signinuser = async (req, res) => {
   }
 };
 
+
+
+const getusername=async(user)=>
+  {
+    try {
+      
+  const userID=user.id
+  console.log(user);
+      
+      const thedb= await connectdb();
+  const query="SELECT USERNAME FROM USER WHERE USER_ID =?"
+  const [getUserName]= await thedb.query(query,[userID]);
+ 
+   return getUserName 
+  
+  } catch (error) {
+      res.json({
+        message:"Error In getting User Name"
+      })
+    }
+  }
+  
+
 const gethomedata = async (req, res) => {
   try {
     const user = req.user;
@@ -129,13 +152,24 @@ const gethomedata = async (req, res) => {
     const TimetableQuery = `SELECT * from ${user.program} WHERE day = ?`;
     const [GetTimeTable] = await thedb.query(TimetableQuery, [day]);
 
-    console.log(GetTimeTable);
+    // console.log(GetTimeTable);
+const username=await getusername(req.user)
+console.log(username );
+    res.json({
+      timetable:GetTimeTable,
+      username:username
+    });
 
-    res.json(GetTimeTable);
+
+
+
   } catch (error) {
     console.log("error Getting timetable data", error);
   }
 };
+
+
+
 
 
 const changepassowrd=async(req,res)=>
@@ -252,4 +286,4 @@ const logout = async (req, res) => {
   }
 };
 
-export { signupuser, signinuser, gethomedata, logout , changepassowrd,changeusername};
+export { signupuser, signinuser, gethomedata, logout , changepassowrd,changeusername, getusername};
