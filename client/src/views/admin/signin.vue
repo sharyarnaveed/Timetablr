@@ -16,10 +16,10 @@ const userdetails=ref({
 const handlesignin = async() => {
 try {
   const responce= await api.post("/api/admin/adminlogin",userdetails.value,{withCredentials:true});
-  console.log(responce.data);
+
   if(responce.data.success===true)
 {
-  router.push("/totheadmindashboard/addcategory")
+  router.push("/totheadmindashboard/")
 }
   console.log(responce);
 } catch (error) {

@@ -30,8 +30,9 @@ const getdata = async (day) => {
   const responce = await api.post("/api/user/home", theday.value, {
     withCredentials: true,
   });
-console.log(responce.data.username[0])
-username.value=responce.data.username[0].USERNAME
+// console.log(responce.data.username[0])
+console.log(responce.data.username[0].username);
+username.value=responce.data.username[0].username
   return responce.data.timetable;
 };
 

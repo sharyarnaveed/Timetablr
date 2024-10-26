@@ -8,9 +8,11 @@ import adminsignin from "@/views/admin/signin.vue"
 import admindashboard from "@/views/admin/dashboard.vue"
 import addcategory from "@/views/admin/addcategory.vue"
 import addtimetable from "@/views/admin/addtimetabele.vue"
-// import Dashboard from '@/views/admin/dashboard.vue'
+import AddTeacher from '@/views/admin/AddTeacher.vue'
 import adminhome from "@/views/admin/adminhome.vue"
 import Settings from '@/views/settings.vue'
+import AddCourse from "@/views/admin/AddCourse.vue"
+import addcourseform from "@/views/admin/addcourseform.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -66,6 +68,20 @@ component:adminhome
     {
       path:"addtimetable",
       component:addtimetable
+    },
+    {
+      path:"addteacher",
+      component:AddTeacher
+    },
+    {
+      path:"addcourse",
+      component:AddCourse
+    }
+    ,{
+      path:"addcourseform/:id",
+      name:"addcourseform",
+      props:true,
+      component:addcourseform
     }
   ]
 }
