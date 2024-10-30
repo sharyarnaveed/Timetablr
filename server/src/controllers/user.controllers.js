@@ -127,7 +127,7 @@ const getusername=async(user)=>
   console.log(user);
       
       const thedb= await connectdb();
-  const query="SELECT USERNAME FROM USER WHERE USER_ID =?"
+  const query="SELECT username FROM USER WHERE USER_ID =?"
   const [getUserName]= await thedb.query(query,[userID]);
  
    return getUserName 
