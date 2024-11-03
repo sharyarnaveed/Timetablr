@@ -10,6 +10,7 @@
           <td>{{ program.program_id }}</td>
           <td>{{ program.program_name }}</td>
           <td><router-link :to="{name:'addcourseform',params:{id:program.program_id}}" >Add Course</router-link></td>
+          <td><router-link :to="{name:'viewaddedcourses',params:{id:program.program_id}}" >View Courses</router-link></td>
         </tr>
       </table>
 </template>

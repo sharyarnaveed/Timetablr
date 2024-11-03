@@ -13,6 +13,10 @@ import adminhome from "@/views/admin/adminhome.vue"
 import Settings from '@/views/settings.vue'
 import AddCourse from "@/views/admin/AddCourse.vue"
 import addcourseform from "@/views/admin/addcourseform.vue"
+import viewaddedcourses from "@/views/admin/viewadd_courses.vue"
+
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -82,6 +86,11 @@ component:adminhome
       name:"addcourseform",
       props:true,
       component:addcourseform
+    },{
+      path:"viewaddedcourses/:id",
+      name:"viewaddedcourses",
+      props:true,
+      component:viewaddedcourses
     }
   ]
 }
