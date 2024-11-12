@@ -1,7 +1,5 @@
 <template>
-    <div>
-{{ prop.id }}
-    </div>
+    
 
     <table>
         <tr>
@@ -13,7 +11,7 @@
 
           <td>{{ program.course_id }}</td>
           <td>{{ program.course_name }}</td>
-          <td><button @click="deletecourse(program.course_id)">Delete</button></td>
+          <td><button class="deletbtn" @click="deletecourse(program.course_id)">Delete</button></td>
         </tr>
       </table>
 </template>
@@ -94,9 +92,22 @@ th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+
 }
 
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.deletbtn
+{
+    width:140px ;
+    height: 30px;
+    background-color: var(--skyblue);
+    border: none;
+    border: 1px solid black;
+    font-size: .9rem;
+    font-family: var(--majorfont);
+}
+
 </style>
