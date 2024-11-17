@@ -78,4 +78,42 @@ res.json({
         console.log("error in deleting courses",error);
     }
 }
-export {GetProgramInfo,submitCourses,GetCoursesList,DeleteCourse}
+
+const AddVenu=async(req,res)=>
+    {
+      try {
+        const rows=req.body;
+        const thedb = await connectdb();
+    await rows.forEach(async element => {
+      console.log(element);
+      const sql = `INSERT INTO Venu (location) VALUES (?)`;
+      const [success] = await thedb.query(sql, [element.venu]);
+    console.log(success);
+    });
+        
+    // console.log(rows);
+    
+      } catch (error) {
+        console.log("error ins sending data",error);
+      }
+    }
+
+
+const GetVenu=async(req,res)=>
+{
+try {
+    const thedb = await connectdb();
+    const query="SELECT * FROM Venu ";
+    const [row]=await thedb.query(query);
+    console.log(row);        
+    res.json(row)
+
+
+} catch (error) {
+    console.log("error getting venu list",error);
+}
+}
+
+
+
+export {GetProgramInfo,submitCourses,GetCoursesList,DeleteCourse,AddVenu,GetVenu}

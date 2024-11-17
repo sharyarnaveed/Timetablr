@@ -71,22 +71,22 @@ const addprogram = async (req, res) => {
 
     if (rows.affectedRows > 0) {
       // Create table only if program insertion is successful
-      const tablesql = `
-                CREATE TABLE ${programname} (
-                    class_id INT AUTO_INCREMENT PRIMARY KEY,
-                    subject VARCHAR(255),
-                    teacher_name VARCHAR(255),
-                    day VARCHAR(255),
-                    start_time VARCHAR(255),
-                    end_time VARCHAR(255),
-                    venu VARCHAR(255)
-                )
-            `;
+      // const tablesql = `
+      //           CREATE TABLE ${programname} (
+      //               class_id INT AUTO_INCREMENT PRIMARY KEY,
+      //               subject VARCHAR(255),
+      //               teacher_name VARCHAR(255),
+      //               day VARCHAR(255),
+      //               start_time VARCHAR(255),
+      //               end_time VARCHAR(255),
+      //               venu VARCHAR(255)
+      //           )
+      //       `;
       // Create the table
-      await thedb.query(tablesql);
+      // await thedb.query(tablesql);
 
       res.status(200).json({
-        message: "Program added and table created",
+        message: "Program added ",
         success: true,
       });
     } else {

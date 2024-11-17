@@ -19,13 +19,13 @@
           <router-link class="dropdown" to="/totheadmindashboard/addcategory">
             Add Class</router-link
           >
-          <router-link class="dropdown" to="/totheadmindashboard/addteacher">
-            Add Teacher</router-link
+          <router-link class="dropdown" to="/totheadmindashboard/teacher">
+             Teacher</router-link
           >
           <router-link class="dropdown" to="/totheadmindashboard/addcourse">
             Add Course</router-link
           >
-          <router-link class="dropdown" to="/totheadmindashboard">
+          <router-link class="dropdown" to="/totheadmindashboard/addVenu">
             Add Class Rooms</router-link
           >
 

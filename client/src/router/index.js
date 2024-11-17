@@ -8,13 +8,13 @@ import adminsignin from "@/views/admin/signin.vue"
 import admindashboard from "@/views/admin/dashboard.vue"
 import addcategory from "@/views/admin/addcategory.vue"
 import addtimetable from "@/views/admin/addtimetabele.vue"
-import AddTeacher from '@/views/admin/AddTeacher.vue'
+import Teacher from '@/views/admin/Teacher.vue'
 import adminhome from "@/views/admin/adminhome.vue"
 import Settings from '@/views/settings.vue'
 import AddCourse from "@/views/admin/AddCourse.vue"
 import addcourseform from "@/views/admin/addcourseform.vue"
 import viewaddedcourses from "@/views/admin/viewadd_courses.vue"
-
+import AddVenu from "@/views/admin/AddVenu.vue"
 
 
 const router = createRouter({
@@ -74,12 +74,16 @@ component:adminhome
       component:addtimetable
     },
     {
-      path:"addteacher",
-      component:AddTeacher
+      path:"teacher",
+      component:Teacher
     },
     {
       path:"addcourse",
       component:AddCourse
+    },
+    {
+      path:"addVenu",
+      component:AddVenu
     }
     ,{
       path:"addcourseform/:id",
