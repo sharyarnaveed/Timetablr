@@ -1,113 +1,103 @@
 <template>
+  <message :messagevalue="theval" v-if="showsuccess"/>
   <form id="innerdiv" class="quizque_conn" @submit.prevent="submitForm">
-    <div v-for="(element, index) in timeTableElements" :key="element.id" class="quizque">
-      <!-- for teacher name -->
+    <!-- Single form for one teacher -->
+    <div class="quizque">
+      <!-- Teacher Name -->
       <textarea
         placeholder="Write Teacher name"
         required
-        v-model="element.textareaValue"
+        v-model="formData.textareaValue"
         cols="10"
         rows="10"
       ></textarea>
 
       <h3 class="credit_hr_heading">Program Name</h3>
 
-      <select required v-model="element.programname">
+      <!-- Program Name Dropdown -->
+      <select required v-model="formData.programname">
         <option v-for="(program, index) in gotten_program" :key="program.program_id" :value="program.program_id">
           {{ program.program_name }}
         </option>
       </select>
 
-      <select required v-model="element.coursename">
+      <!-- Course Name Dropdown -->
+      <select required v-model="formData.coursename">
         <option v-for="(course, index) in gotten_Courses" :key="course.course_id" :value="course.course_id">
           {{ course.course_name }}
         </option>
       </select>
-
-      <button type="button" @click="remove(element.id)">Remove</button>
     </div>
 
+    <!-- Submit Button -->
     <button type="submit">Submit</button>
-    <!-- Button to add a new course dynamically -->
-    <button type="button" @click="addCourse">Add Teacher</button>
   </form>
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import axios from "axios";
+const showsuccess=ref(false);
+const theval=ref("");
+import message from "@/components/success.vue"
+// Reactive state for form data
+const formData = ref({
+  textareaValue: "",
+  programname: "",
+  coursename: "",
+});
 
-// Store for program data
+// Store for program and course data
 const gotten_program = ref([]);
-const gotten_Courses = ref([]);  // Ensure the correct name here
-const timeTableElements = ref([]);
+const gotten_Courses = ref([]);
 
-// Get the list of programs
+// Fetch the list of programs
 const getprogram = async () => {
   try {
     const response = await axios.get("/api/admin/getprogramfromdb");
     gotten_program.value = response.data;
   } catch (error) {
-    console.log("Error in getting program list", error);
+    console.error("Error fetching programs:", error);
   }
 };
 
-// Watch for changes in the selected program name
+// Watch for changes in selected program to fetch courses dynamically
 watch(
-  () => timeTableElements.value.map((element) => element.programname),
-  async (newProgramNames, oldProgramNames) => {
-    for (let index = 0; index < newProgramNames.length; index++) {
-      if (newProgramNames[index] !== oldProgramNames[index]) {
-        try {
-          const response = await axios.post("/api/admin/getcourselist", {
-            program_id: newProgramNames[index],
-          });
-          gotten_Courses.value = response.data;
-        } catch (error) {
-          console.log("Error fetching course list:", error);
-        }
+  () => formData.value.programname,
+  async (newProgramId) => {
+    if (newProgramId) {
+      try {
+        const response = await axios.post("/api/admin/getcourselist", {
+          program_id: newProgramId,
+        });
+        gotten_Courses.value = response.data;
+      } catch (error) {
+        console.error("Error fetching courses:", error);
       }
     }
-  },
-  { deep: true, immediate: true }
+  }
 );
 
-// Fetch the program data on component mount
-onMounted(() => {
-  getprogram();
+// Fetch programs on component mount
+onMounted(async() => {
+  await getprogram();
 });
-
-// Add a new course element to the list
-const addCourse = () => {
-  timeTableElements.value.push({
-    id: Date.now(),
-    textareaValue: "",
-    programname: "",
-    coursename: "",
-  });
-};
-
-// Remove a quiz element by its ID
-const remove = (id) => {
-  timeTableElements.value = timeTableElements.value.filter(
-    (element) => element.id !== id
-  );
-};
 
 // Handle form submission
 const submitForm = async () => {
-  const formData = timeTableElements.value.map((element) => ({
-    textareaValue: element.textareaValue,
-    programname: element.programname,
-    coursename: element.coursename,
-  }));
-  
   try {
-    console.log("Form Data:", formData);
-    // You can make an API call here to submit the form data
-    // const response = await axios.post('/your/api/endpoint', formData);
+    const response = await axios.post("/api/admin/saveteacher",formData.value);
+    gotten_program.value = response.data;
+    console.log(response.data);
+if(response.data.sucess==true)
+{
+showsuccess.value=true
+theval.value=response.data.message
+await getprogram();
+}
+
   } catch (error) {
-    console.log("Error submitting form:", error);
+    console.log("Error in getting program list", error);
   }
 };
 </script>

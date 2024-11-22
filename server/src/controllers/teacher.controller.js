@@ -22,5 +22,23 @@ if(program_id=="")
         }
     }
 
-    export {GetCoursesListForTeacher}
+    const saveteacher = async (req, res) => {
+        try {
+          const data = req.body; // Assuming `rows` is an array of data to insert
+          const thedb = await connectdb();
+          const query=" INSERT INTO teacher (teacher_name, program,course) VALUES (?, ?, ?)";
+          const [rows]=await thedb.query(query,[data.textareaValue,data.programname,data.coursename])
+      console.log(rows);
+         res.json({
+            sucess:true,
+            message:"teacher saved successfully",
+         })
+        } catch (error) {
+          console.error("Error inserting data:", error);
+          res.status(500).json({ message: "Error inserting data", error });
+        }
+      };
+
+
+    export {GetCoursesListForTeacher,saveteacher}
     
