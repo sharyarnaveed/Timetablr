@@ -20,6 +20,7 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.0",
+    "pdfkit": "^0.15.1",
     "prettier": "^3.3.3"
   }
 }

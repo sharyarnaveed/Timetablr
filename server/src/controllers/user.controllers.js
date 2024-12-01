@@ -119,45 +119,49 @@ const signinuser = async (req, res) => {
 
 
 
-const getusername=async(user)=>
-  {
-    try {
-      
-  const userID=user.id
-  console.log(user);
-      
-      const thedb= await connectdb();
-  const query="SELECT username FROM USER WHERE USER_ID =?"
-  const [getUserName]= await thedb.query(query,[userID]);
- 
-   return getUserName 
-  
+const getusername = async (user) => {
+  try {
+
+    const userID = user.id
+    console.log(user);
+
+    const thedb = await connectdb();
+    const query = "SELECT username FROM USER WHERE USER_ID =?"
+    const [getUserName] = await thedb.query(query, [userID]);
+
+    return getUserName
+
   } catch (error) {
-      res.json({
-        message:"Error In getting User Name"
-      })
-    }
+    res.json({
+      message: "Error In getting User Name"
+    })
   }
-  
+}
+
 
 const gethomedata = async (req, res) => {
   try {
     const user = req.user;
     console.log(user.program);
     const { day } = req.body;
-
+console.log(day);
     // // get user program
     const thedb = await connectdb();
 
-    const TimetableQuery = `SELECT * from ${user.program} WHERE day = ?`;
-    const [GetTimeTable] = await thedb.query(TimetableQuery, [day]);
+    const TimetableQuery = `SELECT * 
+FROM timetable 
+INNER JOIN programs 
+ON timetable.program_id = programs.program_id
+WHERE programs.program_name = ? AND timetable.day= ?;
+`;
+    const [GetTimeTable] = await thedb.query(TimetableQuery, [user.program,day]);
 
-    // console.log(GetTimeTable);
-const username=await getusername(req.user)
-console.log(username );
+    console.log(GetTimeTable);
+    const username = await getusername(req.user)
+    console.log(username);
     res.json({
-      timetable:GetTimeTable,
-      username:username
+      timetable: GetTimeTable,
+      username: username
     });
 
 
@@ -172,44 +176,42 @@ console.log(username );
 
 
 
-const changepassowrd=async(req,res)=>
-{
+const changepassowrd = async (req, res) => {
   try {
-    const thedb=await connectdb();
-const user_id=req.user.id;
-console.log(user_id);
-const {oldpassword,newpassword}=req.body;
-const hashednewpass= await bcrypt.hash(newpassword,10);
+    const thedb = await connectdb();
+    const user_id = req.user.id;
+    console.log(user_id);
+    const { oldpassword, newpassword } = req.body;
+    const hashednewpass = await bcrypt.hash(newpassword, 10);
 
 
-// compare old password first
-const oldpasscheck="SELECT password from user WHERE user_id=?"
-const [check]=await thedb.query(oldpasscheck,[user_id])
-if(check.length>0)
-{
-  // console.log(check[0].password);
-  const hashedpassword=check[0].password
-const comparepassword=await bcrypt.compare(oldpassword,hashedpassword)
+    // compare old password first
+    const oldpasscheck = "SELECT password from user WHERE user_id=?"
+    const [check] = await thedb.query(oldpasscheck, [user_id])
+    if (check.length > 0) {
+      // console.log(check[0].password);
+      const hashedpassword = check[0].password
+      const comparepassword = await bcrypt.compare(oldpassword, hashedpassword)
 
-if (comparepassword) {
-  const query="UPDATE user SET password=? WHERE user_id=?";
-const [update]=await thedb.query(query,[hashednewpass,user_id]);
-console.log(update);
+      if (comparepassword) {
+        const query = "UPDATE user SET password=? WHERE user_id=?";
+        const [update] = await thedb.query(query, [hashednewpass, user_id]);
+        console.log(update);
 
-res.json({
-  message:"Password Changed Successfully",
-})
-}
-else{
-  res.json({
-    message:"Old Password is Incorrect",
-  })
-}
+        res.json({
+          message: "Password Changed Successfully",
+        })
+      }
+      else {
+        res.json({
+          message: "Old Password is Incorrect",
+        })
+      }
 
 
-console.log(comparepassword);
+      console.log(comparepassword);
 
-}
+    }
 
 
   } catch (error) {
@@ -220,41 +222,38 @@ console.log(comparepassword);
 }
 
 
-const changeusername=async(req,res)=>
-{
-try {
-  const {username}=req.body;
-  const user_id=req.user.id;
-  console.log(user_id);
-const thedb=await connectdb();
-  const checkusernamequery="SELECT USERNAME FROM USER WHERE username=?";
-  const [checkusername]=await thedb.query(checkusernamequery,[username]);
-  if(checkusername.length>0)
-  {
+const changeusername = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const user_id = req.user.id;
+    console.log(user_id);
+    const thedb = await connectdb();
+    const checkusernamequery = "SELECT USERNAME FROM USER WHERE username=?";
+    const [checkusername] = await thedb.query(checkusernamequery, [username]);
+    if (checkusername.length > 0) {
+      res.json({
+        message: "Username ALready Taken"
+      })
+    }
+    else {
+      const changenamequery = "UPDATE user SET username=? WHERE user_id=?";
+      const [change] = await thedb.query(changenamequery, [username, user_id])
+      console.log(change);
+
+      res.json({
+        message: "UserName Changed"
+      })
+
+    }
+    console.log(checkusername);
+
+
+  } catch (error) {
+    console.log(error);
     res.json({
-      message:"Username ALready Taken"
+      message: "Error In Changing Password"
     })
   }
-  else
-  {
-const changenamequery="UPDATE user SET username=? WHERE user_id=?";
-const [change]= await thedb.query(changenamequery,[username,user_id])
-console.log(change);
-
-res.json({
-  message:"UserName Changed"
-})
-
-  }
-  console.log(checkusername);
-
-
-} catch (error) {
-  console.log(error);
-  res.json({
-    message:"Error In Changing Password"
-  })
-}
 }
 
 
@@ -286,4 +285,4 @@ const logout = async (req, res) => {
   }
 };
 
-export { signupuser, signinuser, gethomedata, logout , changepassowrd,changeusername, getusername};
+export { signupuser, signinuser, gethomedata, logout, changepassowrd, changeusername, getusername };

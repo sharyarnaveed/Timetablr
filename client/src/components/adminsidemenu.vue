@@ -29,18 +29,16 @@
             Add Class Rooms</router-link
           >
 
-          <router-link class="dropdown" to="/totheadmindashboard">
-            Add Timetable</router-link
+          <router-link class="dropdown" to="/totheadmindashboard/addtimetable">
+            View Timetable</router-link
           >
         </div>
       </li>
 
       <li class="asideoptions">
-        <router-link class="optionslink" to="/totheadmindashboard/addtimetable"
-          >
+        <button @click="generatetimetable" class="optionslink">
           <img src="@/assets/people.svg" alt="" />
-          Gen Timetable</router-link
-        >
+          Gen Timetable</button>
       </li>
 
       <li @click="logout" class="asideoptions">
@@ -53,6 +51,7 @@
 </template>
 
 <script setup>
+import axios from "axios";
 import { ref } from "vue";
 
 const dropdown = ref(false);
@@ -60,6 +59,20 @@ const dropdown = ref(false);
 function toggle() {
   dropdown.value = !dropdown.value;
 }
+
+const generatetimetable=async()=>
+{
+try {
+  
+  const responce=await axios.post("/api/admin/generate");
+  console.log(responce.data);
+} catch (error) {
+  console.log("cant generate timetable");
+}
+}
+
+
+
 </script>
 
 <style scoped>
