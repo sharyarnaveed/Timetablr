@@ -41,7 +41,7 @@ export const useTimetableStore = defineStore("timetable", {
       this.notcurrentclass = this.classes.filter((c) => {
         const classStart = c.start_time * 24 * 60; // Convert to minutes
 
-        // console.log("Checking clsass start time in minutes:", classStart); // Debug: Log each class start time
+        console.log("Checking clsass start time in minutes:", classStart); // Debug: Log each class start time
 
         // Check if the class start time is after the current time
         return Totalmins < classStart;

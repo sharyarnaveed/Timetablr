@@ -165,7 +165,29 @@ console.log(success);
   }
 }
 
+const graph=async(req,res)=>
+{
+  const query = `
+ SELECT
+  DATE_FORMAT(time, '%Y-%m-01') AS month, -- Extracts the month as 'YYYY-MM-01'
+  COUNT(*) AS userCount
+FROM user
+GROUP BY month
+ORDER BY month ASC;
+
+  `;
+try {
+  
+  const thedb = await connectdb();
+  const [rows] = await thedb.query(query);
+  console.log(rows);
+res.json([rows])
+} catch (error) {
+  console.log(error);
+}
+}
 
 
 
-export { addprogram, getprogram, adminsigin, logout, timatble };
+
+export { addprogram, getprogram, adminsigin, logout, timatble,graph };

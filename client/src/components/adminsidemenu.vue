@@ -51,6 +51,7 @@
 </template>
 
 <script setup>
+import router from "@/router";
 import axios from "axios";
 import { ref } from "vue";
 
@@ -71,6 +72,20 @@ try {
 }
 }
 
+
+const logout=async()=>
+{
+  try {
+  
+  const responce=await axios.post("/api/admin/adminlogut");
+  console.log(responce.data);
+  if (responce.data.success==true) {
+    router.push("/adminthesignin");
+  }
+} catch (error) {
+  console.log("cant logout");
+}
+}
 
 
 </script>

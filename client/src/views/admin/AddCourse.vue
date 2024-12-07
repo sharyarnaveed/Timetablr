@@ -12,7 +12,7 @@ import coursestable from '@/components/coursestable.vue';
 <style scoped>
 .addacourse
 {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     height: 90vh;
     overflow-y: auto;
 }

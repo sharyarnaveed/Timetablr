@@ -31,14 +31,15 @@ const submitCourses = async (req, res) => {
         course.textareaValue,
         course.credithr,
       ]);
-
       console.log(row);
-      res.json({
-        message: "Courses added",
-        success: true,
-      });
     }
-  } catch (error) {
+    res.json({
+      message: "Courses added",
+      success: true,
+    });
+
+  }
+  catch (error) {
     console.log("error in saving courses", error);
   }
 };
@@ -132,7 +133,7 @@ const addOneHour = (time) => {
 };
 
 const formatTime = (time) => {
-  const hours = String(Math.floor(time / 100)).padStart(2, "0");
+  const hours = Math.floor(time / 100)
   const minutes = String(time % 100).padStart(2, "0");
   return `${hours}:${minutes}`;
 };
@@ -148,13 +149,13 @@ const generateTimetable = async () => {
     const [teachers] = await thedb.query("SELECT * FROM teacher");
     await thedb.query("TRUNCATE TABLE timetable");
 
-    const timeSlots = generateTimeSlots(900, 1200);
+    const timeSlots = generateTimeSlots(900, 1300);
     const timetable = {};
     const venueAvailability = {};
     const programSchedule = {}; // Tracks program schedules
 
     // Initialize timetable and availability
-    const DAYS_LIST = ["Monday", "Tuesday", "Wednesday"];
+    const DAYS_LIST = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
     DAYS_LIST.forEach((day) => {
       timetable[day] = {};
       venueAvailability[day] = {};
@@ -278,26 +279,26 @@ const generate = async (req, res) => {
 
 
 
-  const gettable = async (req, res) => {
-    try {
-      const thedb = await connectdb();
-      const query =
-        "SELECT * FROM timetable INNER JOIN programs ON timetable.program_id = programs.program_id INNER JOIN courses ON timetable.course_id = courses.course_id INNER JOIN venu ON timetable.venue_id=venu.venu_id INNER JOIN teacher ON timetable.teacher_id=teacher.teacher_id ;";
-      const [result] = await thedb.query(query);
-      console.log(result);
-      res.json(result);
-    } catch (error) {
-      console.log("Cant get data", error);
-    }
-  };
+const gettable = async (req, res) => {
+  try {
+    const thedb = await connectdb();
+    const query =
+      "SELECT * FROM timetable INNER JOIN programs ON timetable.program_id = programs.program_id INNER JOIN courses ON timetable.course_id = courses.course_id INNER JOIN venu ON timetable.venue_id=venu.venu_id INNER JOIN teacher ON timetable.teacher_id=teacher.teacher_id ;";
+    const [result] = await thedb.query(query);
+    console.log(result);
+    res.json(result);
+  } catch (error) {
+    console.log("Cant get data", error);
+  }
+};
 
-  export {
-    GetProgramInfo,
-    submitCourses,
-    GetCoursesList,
-    DeleteCourse,
-    AddVenu,
-    GetVenu,
-    generate,
-    gettable,
-  };
+export {
+  GetProgramInfo,
+  submitCourses,
+  GetCoursesList,
+  DeleteCourse,
+  AddVenu,
+  GetVenu,
+  generate,
+  gettable,
+};

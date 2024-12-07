@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import router from "@/router";
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import * as XLSX from "xlsx";
@@ -39,8 +40,13 @@ const getvenu=async()=>
 try {
     
 const response=await axios.post("/api/admin/getvenu");
-console.log(response.data);
-venulist.value=response.data;
+const newval=response.data;
+console.log(venulist.value);
+
+venulist.value.push(...newval);
+
+
+
 
 } catch (error) {
     console.log(error);
@@ -51,9 +57,10 @@ venulist.value=response.data;
 async function sendtobackend(data) {
   try {
     const response = await axios.post("/api/admin/addvenu", data);
-    await getvenu();
+     
     console.log("Data sent to backend:", data);
     console.log(response);
+    router.push("/addVenu")
   } catch (error) {
     console.log("Error sending data to backend:", error);
   }
@@ -93,6 +100,7 @@ const handleexcel = async (e) => {
         };
 
         allRows.push(rowData);
+
       }
     }
 
@@ -101,8 +109,9 @@ const handleexcel = async (e) => {
     // Send all rows in one request
     await sendtobackend(allRows);
   };
-
+  
   reader.readAsArrayBuffer(file);
+  
 };
 
 // fecthing venu list
@@ -121,7 +130,7 @@ onMounted(async()=>
 
 <style scoped>
 .Heading {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   height: 10%;
   display: flex;
   justify-content: start;
@@ -132,13 +141,13 @@ onMounted(async()=>
   font-size: 2rem;
 }
 .uploadfile {
-  border: 2px solid green;
+  /* border: 2px solid green; */
   height: 50px;
   display: flex;
   align-items: center;
 }
 .tableshow{
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     margin: 30px 0px;
     height: 65%;
     padding: 10px 10px;
