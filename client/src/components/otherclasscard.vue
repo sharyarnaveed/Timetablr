@@ -2,15 +2,15 @@
     <div back class="currentconnlater">
       <h5 id="subject">
         Subject:
-        <p>{{ prop.notclass.subject }}</p>
+        <p>{{ prop.notclass.course_name }}</p>
       </h5>
       <h5>
         Venu:
-        <p>{{ prop.notclass.venu }}</p>
+        <p>{{ prop.notclass.location }}</p>
       </h5>
       <h5>
         Time:
-        <p>{{ convstartime }} - {{ convendtime }}</p>
+        <p>{{ starttime }} - {{ endtime }}</p>
       </h5>
 
     </div>
@@ -21,28 +21,14 @@
 const prop=defineProps({
   notclass:Object
 })
-const converttime = (time) => {
-  const totalMinutes = time * 60 * 24;
 
-  // Get hours and minutes
-  const hours = Math.floor(totalMinutes / 60);
-  let minutes = Math.floor(totalMinutes % 60);
-  if (minutes == 0) {
-    minutes = "00";
-  }
-  // console.log(`${hours} hours and ${minutes} minutes`);
-  return `${hours}:${minutes}`;
-  // console.log(time);
-};
-const starttime = ref(0);
-const endtime = ref(0);
-const convstartime = ref("");
-const convendtime = ref("");
+const starttime = ref("");
+const endtime = ref("");
+
 
 starttime.value = prop.notclass.start_time;
 endtime.value = prop.notclass.end_time;
-convstartime.value = converttime(starttime.value);
-  convendtime.value = converttime(endtime.value);
+
 
 
 

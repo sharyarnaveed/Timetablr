@@ -150,9 +150,11 @@ console.log(day);
 
     const TimetableQuery = `SELECT * 
 FROM timetable 
-INNER JOIN programs 
-ON timetable.program_id = programs.program_id
-WHERE programs.program_name = ? AND timetable.day= ?;
+INNER JOIN courses ON timetable.course_id = courses.course_id 
+INNER JOIN venu ON timetable.venue_id = venu.venu_id 
+INNER JOIN teacher ON timetable.teacher_id = teacher.teacher_id 
+INNER JOIN programs ON timetable.program_id = programs.program_id 
+WHERE programs.program_name = ? AND timetable.day = ?;
 `;
     const [GetTimeTable] = await thedb.query(TimetableQuery, [user.program,day]);
 

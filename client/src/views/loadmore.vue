@@ -5,7 +5,7 @@
     <div class="notclasscon">
       <Otherclasscard
         v-for="notclass in notcurrentclass"
-        :key="notclass.class_id"
+        :key="notclass.id"
         :notclass="notclass"
         class="comp"
       />
@@ -27,15 +27,19 @@ const theday = ref({
 });
 
 const getdata = async (day) => {
-  // console.log(day);
-  theday.value.day = day;
-  //   console.log(theday.value.day);
-  const responce = await api.post("/api/user/home", theday.value, {
-    withCredentials: true,
-  });
-  // console.log(responce.data);
-  return responce.data;
+  try {
+    theday.value.day = day;
+    const response = await api.post("/api/user/home", theday.value, {
+      withCredentials: true,
+    });
+   
+    return response.data.timetable;
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    return [];
+  }
 };
+
 
 onMounted(async () => {
   const today = new Date();
@@ -48,7 +52,7 @@ onMounted(async () => {
   //   usetimetable.findCurrentClass();
   timetable.findnotcurrent();
   notcurrentclass.value = timetable.notcurrentclass;
-  console.log(notcurrentclass.value);
+  console.log("in load more",notcurrentclass.value);
 });
 
 //  console.log(nocurrentclass);

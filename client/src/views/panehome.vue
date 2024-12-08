@@ -17,24 +17,27 @@ const usetimetable = useTimetableStore();
 const noclass = ref({});
 const subject = ref("");
 const venu = ref("");
-const starttime = ref(0);
-const endtime = ref(0);
+const starttime = ref("");
+const endtime = ref("");
 const username=ref()
 const theday = ref({
   day: "",
 });
 const getdata = async (day) => {
-  // console.log(day);
-  theday.value.day = day;
-  console.log(theday.value.day);
-  const responce = await api.post("/api/user/home", theday.value, {
-    withCredentials: true,
-  });
-// console.log(responce.data.username[0])
-console.log(responce.data.username[0].username);
-username.value=responce.data.username[0].username
-  return responce.data.timetable;
+  try {
+    theday.value.day = day;
+    const response = await api.post("/api/user/home", theday.value, {
+      withCredentials: true,
+    });
+    username.value = response.data.username[0]?.username || "Unknown User";
+    console.log("in panel home",response.data.timetable);
+    return response.data.timetable;
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+    return [];
+  }
 };
+
 
 
 
@@ -58,11 +61,11 @@ onMounted(async () => {
   await usetimetable.findCurrentClass();
   await usetimetable.findnotcurrent();
   if (usetimetable.notcurrentclass.length > 0) {
-    console.log(usetimetable.notcurrentclass[0]);
+    console.log("in panel home 2",usetimetable.notcurrentclass[0]);
     noclass.value = usetimetable.notcurrentclass[0];
-    subject.value = noclass.value.subject;
-    venu.value = noclass.value.venu;
-
+    subject.value = noclass.value.course_name;
+    venu.value = noclass.value.location;
+console.log(noclass.value.start_time);
     starttime.value = noclass.value.start_time;
     endtime.value = noclass.value.end_time;
   }
@@ -89,7 +92,7 @@ onMounted(async () => {
       <div class="currentconoutisde">
         <h4>Current</h4>
 
-        <infocard v-if="usetimetable.currentClass" />
+        <infocard v-if="usetimetable.currentClass"  />
         <h2 class="noclasstext" v-else>No Class Right Now</h2>
       </div>
     </div>

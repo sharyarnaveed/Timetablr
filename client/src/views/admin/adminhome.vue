@@ -28,16 +28,26 @@
 
 
         <section class="teacherslist">
+          <router-link class="courseslist" to="/totheadmindashboard/teacher">
             <table>
         <tr>
-          <th>Program Id</th>
+         
+          <th>Teacher Name</th>
+          <th>Course Name</th>
           <th>Program Name</th>
+      
         </tr>
-        <tr v-for="(program, index) in gottenprogram" :key="program.program_id">
-          <td>{{ program.program_id }}</td>
-          <td>{{ program.program_name }}</td>
+        <tr v-for="teacher in teacherlist" :key="teacher.teacher_id" >
+
+        
+          <td> {{ teacher.teacher_name  }} </td>
+          <td> {{ teacher.course_name  }} </td>
+          <td> {{ teacher.program_name  }} </td>
+          
         </tr>
       </table>
+          </router-link>
+        
         </section>
     </section>
 
@@ -49,17 +59,40 @@ import linechart from "@/components/linechart.vue"
 import axios from "axios";
 import { onMounted,ref } from "vue";
 const gottenprogram=ref([]);
+const teacherlist=ref([]);
+
 
 const getcategory=async()=>
 {
-  const getcateg=await axios.get("/api/admin/getprogramfromdb");
-  gottenprogram.value=getcateg.data;
+  try {
+    const getcateg=await axios.get("/api/admin/getprogramfromdb");
+    gottenprogram.value=getcateg.data;
+  } catch (error) {
+    console.log("error getting program from db",error);
+  }
   
   // console.log(gottenprogram.value);
 }
+
+const getteacher=async()=>
+{
+    try {
+        
+        const responce=await axios.post("/api/admin/getteacher")
+console.log(responce.data);
+teacherlist.value=responce.data
+
+    } catch (error) {
+        console.log("Error Gettting Teachers",error);
+    }
+}
+
+
+
 onMounted(()=>
 {
   getcategory();
+  getteacher();
 })
 
 </script>
@@ -136,5 +169,6 @@ tr:nth-child(even) {
     height: 90%;
     background-color: white;
     border-radius: 14px;
+    overflow-y: auto;
 }
 </style>

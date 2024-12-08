@@ -133,7 +133,7 @@ const addOneHour = (time) => {
 };
 
 const formatTime = (time) => {
-  const hours = Math.floor(time / 100)
+  const hours = Math.floor(time / 100);
   const minutes = String(time % 100).padStart(2, "0");
   return `${hours}:${minutes}`;
 };
@@ -149,13 +149,13 @@ const generateTimetable = async () => {
     const [teachers] = await thedb.query("SELECT * FROM teacher");
     await thedb.query("TRUNCATE TABLE timetable");
 
-    const timeSlots = generateTimeSlots(900, 1300);
+    const timeSlots = generateTimeSlots(900, 1900);
     const timetable = {};
     const venueAvailability = {};
     const programSchedule = {}; // Tracks program schedules
 
     // Initialize timetable and availability
-    const DAYS_LIST = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    const DAYS_LIST = ["Sunday", "Tuesday", "Wednesday", "Thursday", "Friday"];
     DAYS_LIST.forEach((day) => {
       timetable[day] = {};
       venueAvailability[day] = {};
@@ -216,8 +216,8 @@ const generateTimetable = async () => {
                     "INSERT INTO timetable (day, start_time, end_time, program_id, course_id, teacher_id, venue_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
                     [
                       day,
-                      slot,
-                      addOneHour(slot),
+                      formatTime(slot), // Save as '9:00'
+                      formatTime(addOneHour(slot)), // Save as '10:00'
                       program.program_id,
                       course.course_id,
                       teacher.teacher_id,

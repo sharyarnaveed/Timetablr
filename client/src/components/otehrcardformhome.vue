@@ -10,7 +10,7 @@
     </h5>
     <h5>
       Time:
-      <p>{{ starttimecard }}-{{ endtimecard }}</p>
+      <p>{{ starttime }}-{{ endtime }}</p>
     </h5>
   </div>
 </template>
@@ -18,34 +18,21 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
-const starttimecard = ref('');
-const endtimecard = ref('');
 
-const converttime = (time) => {
-  const totalMinutes = time * 60 * 24;
 
-  // Get hours and minutes
-  const hours = Math.floor(totalMinutes / 60);
-  let minutes = Math.floor(totalMinutes % 60);
-  if (minutes == 0) {
-    minutes = "00";
-  }
 
-  return `${hours}:${minutes}`;
-};
 
 const prop = defineProps({
   subject: String,
   venu: String,
-  starttime: [Number,String],
-  endtime:[Number,String], 
+  starttime: String,
+  endtime:String, 
 });
 
 onMounted(async()=>
 {
 
-  starttimecard.value = await converttime(prop.starttime);
-  endtimecard.value = await converttime(prop.endtime);
+
 })
 
 </script>

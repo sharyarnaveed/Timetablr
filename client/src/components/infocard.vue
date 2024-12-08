@@ -10,7 +10,7 @@
     </h5>
     <h5>
       Time:
-      <p>{{ convstartime }} - {{ convendtime }}</p>
+      <p>{{ starttime }} - {{  endtime }}</p>
     </h5>
   </div>
 </template>
@@ -23,33 +23,19 @@ const subject = ref("");
 const venu = ref("");
 const starttime = ref(0);
 const endtime = ref(0);
-const convstartime = ref("");
-const convendtime = ref("");
 
-const converttime = (time) => {
-  const totalMinutes = time * 60 * 24;
 
-  // Get hours and minutes
-  const hours = Math.floor(totalMinutes / 60);
-  let minutes = Math.floor(totalMinutes % 60);
-  if (minutes == 0) {
-    minutes = "00";
-  }
-  // console.log(`${hours} hours and ${minutes} minutes`);
-  return `${hours}:${minutes}`;
-  // console.log(time);
-};
+
 
 onMounted(() => {
   const timetable = useTimetableStore();
   currentclass.value = timetable.currentClass;
-  // console.log(currentclass.value.subject);
-  subject.value = currentclass.value.subject;
-  venu.value = currentclass.value.venu;
+ 
+  subject.value = currentclass.value.course_name;
+  venu.value = currentclass.value.location;
   starttime.value = currentclass.value.start_time;
   endtime.value = currentclass.value.end_time;
-  convstartime.value = converttime(starttime.value);
-  convendtime.value = converttime(endtime.value);
+ 
 });
 </script>
 

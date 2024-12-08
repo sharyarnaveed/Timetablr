@@ -2,32 +2,39 @@ import { defineStore } from "pinia";
 
 export const useTimetableStore = defineStore("timetable", {
   state: () => ({
-    classes: [],
+    classes: [], // Should be an array of objects
     currentClass: null,
     notcurrentclass: [],
   }),
   actions: {
     setClasses(classes) {
-      this.classes = classes;
-      // console.log("from set classes",this.classes);
+      if (Array.isArray(classes)) {
+        this.classes = classes;
+        // console.log("Classes set successfully:", this.classes);
+      } else {
+        // console.error("setClasses expects an array but received:", classes);
+      }
     },
     findCurrentClass() {
       const now = new Date();
-      // Assuming the class times are date-time objects
-
       const currenthours = now.getHours();
       const currentminutes = now.getMinutes();
       const Totalmins = currenthours * 60 + currentminutes;
 
-      console.log("all", this.classes);
+      // console.log("All classes:", this.classes);
 
       this.currentClass = this.classes.find((c) => {
-        const classStart = c.start_time * 24 * 60;
-        const classEnd = c.end_time * 24 * 60;
-        // console.log(classStart);
+        const [startHours, startMinutes] = c.start_time.split(":").map(Number);
+        const [endHours, endMinutes] = c.end_time.split(":").map(Number);
+
+        const classStart = startHours * 60 + startMinutes;
+        const classEnd = endHours * 60 + endMinutes;
+
+        // console.log(`Checking: Start=${classStart}, End=${classEnd}, Now=${Totalmins}`);
         return Totalmins >= classStart && Totalmins <= classEnd;
       });
-      // console.log(this.currentClass);
+
+      // console.log("Current class:", this.currentClass);
     },
     findnotcurrent() {
       const now = new Date();
@@ -35,18 +42,22 @@ export const useTimetableStore = defineStore("timetable", {
       const currentminutes = now.getMinutes();
       const Totalmins = currenthours * 60 + currentminutes;
 
-      // console.log("From the Not current",this.classes); // Debug: Log current total minutes
+      // console.log("Finding not current classes. All classes:", this.classes);
 
-      // Find classes that are scheduled to start after the current time
+      if (!Array.isArray(this.classes)) {
+        console.error("this.classes is not an array:", this.classes);
+        return;
+      }
+
       this.notcurrentclass = this.classes.filter((c) => {
-        const classStart = c.start_time * 24 * 60; // Convert to minutes
+        const [startHours, startMinutes] = c.start_time.split(":").map(Number);
+        const classStart = startHours * 60 + startMinutes;
 
-        console.log("Checking clsass start time in minutes:", classStart); // Debug: Log each class start time
-
-        // Check if the class start time is after the current time
-        return Totalmins < classStart;
+        // console.log("Class start time in minutes:", classStart);
+        return Totalmins < classStart; // Classes after current time
       });
-      //   console.log("Classes after the current time:", this.notcurrentclass); // Debug: Log classes after the current time
+
+      // console.log("Not current classes:", this.notcurrentclass);
     },
   },
 });
