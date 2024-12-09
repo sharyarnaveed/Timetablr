@@ -1,6 +1,6 @@
 import connectdb from "../database/dbconn.database.js";
 import bcrypt from "bcryptjs";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 const adminsigin = async (req, res) => {
   try {
@@ -29,10 +29,10 @@ const adminsigin = async (req, res) => {
         );
 
         // update refresh token in database
-        await thedb.query("UPDATE admin SET refreshtoken =? WHERE admin_id= ?", [
-          refreshtoken,
-          admin_id,
-        ]);
+        await thedb.query(
+          "UPDATE admin SET refreshtoken =? WHERE admin_id= ?",
+          [refreshtoken, admin_id]
+        );
 
         const options = {
           httpOnly: true,
@@ -109,16 +109,15 @@ const getprogram = async (req, res) => {
     const thedb = await connectdb();
     // // console.log(thedb);
     const [rows] = await thedb.query(`SELECT * FROM programs`);
-    //  console.log(rows);
+     console.log(rows);
     res.json(rows);
   } catch (error) {
     console.log("error in getting programs", error);
   }
 };
 
-const logout=async(req,res)=>
-{
-    try{
+const logout = async (req, res) => {
+  try {
     const thedb = await connectdb();
     const admin_id = req.user.admin_id;
     const rf = "undefined";
@@ -126,47 +125,48 @@ const logout=async(req,res)=>
       rf,
       admin_id,
     ]);
-  
+
     const options = {
       httpOnly: true,
       secure: true,
     };
-  
+
     res.clearCookie("adminaccessToken", options);
     res.clearCookie("adminrefreshToken", options);
-    res.json({ 
+    res.json({
       message: "Logged out successfully",
-      success:true
-     });
-
-
-
+      success: true,
+    });
   } catch (error) {
-    console.log("error in logout",error);
+    console.log("error in logout", error);
   }
-}
+};
 
-const timatble=async(req,res)=>
-{
+const timatble = async (req, res) => {
   try {
-    const rows=req.body;
+    const rows = req.body;
     const thedb = await connectdb();
-await rows.forEach(async element => {
-  console.log(element);
-  const sql = `INSERT INTO SE22_RED (SUBJECT,TEACHER_NAME,DAY,start_time,end_time,VENU) VALUES (?,?,?,?,?,?)`;
-  const [success] = await thedb.query(sql, [element.subject,element.teacher,element.days,element.start_time,element.end_time,element.venu]);
-console.log(success);
-});
-    
-// console.log(rows);
+    await rows.forEach(async (element) => {
+      console.log(element);
+      const sql = `INSERT INTO SE22_RED (SUBJECT,TEACHER_NAME,DAY,start_time,end_time,VENU) VALUES (?,?,?,?,?,?)`;
+      const [success] = await thedb.query(sql, [
+        element.subject,
+        element.teacher,
+        element.days,
+        element.start_time,
+        element.end_time,
+        element.venu,
+      ]);
+      console.log(success);
+    });
 
+    // console.log(rows);
   } catch (error) {
-    console.log("error ins sending data",error);
+    console.log("error ins sending data", error);
   }
-}
+};
 
-const graph=async(req,res)=>
-{
+const graph = async (req, res) => {
   const query = `
  SELECT
   DATE_FORMAT(time, '%Y-%m-01') AS month, -- Extracts the month as 'YYYY-MM-01'
@@ -176,18 +176,31 @@ GROUP BY month
 ORDER BY month ASC;
 
   `;
-try {
-  
-  const thedb = await connectdb();
-  const [rows] = await thedb.query(query);
-  console.log(rows);
-res.json([rows])
-} catch (error) {
-  console.log(error);
+  try {
+    const thedb = await connectdb();
+    const [rows] = await thedb.query(query);
+    console.log(rows);
+    res.json([rows]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deletprogram=async(req,res)=>
+{
+  try {
+    
+const id=req.body.id;
+
+console.log(id);
+// const quer
+
+  } catch (error) {
+    console.log("error deleting project");
+  }
 }
-}
 
 
 
 
-export { addprogram, getprogram, adminsigin, logout, timatble,graph };
+export { addprogram, getprogram, adminsigin, logout, timatble, graph,deletprogram };

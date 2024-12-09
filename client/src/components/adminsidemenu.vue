@@ -30,7 +30,7 @@
           >
 
           <router-link class="dropdown" to="/totheadmindashboard/addtimetable">
-            View Timetable</router-link
+            Upload Timetable</router-link
           >
         </div>
       </li>

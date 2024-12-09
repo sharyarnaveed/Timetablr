@@ -149,13 +149,13 @@ const generateTimetable = async () => {
     const [teachers] = await thedb.query("SELECT * FROM teacher");
     await thedb.query("TRUNCATE TABLE timetable");
 
-    const timeSlots = generateTimeSlots(900, 1900);
+    const timeSlots = generateTimeSlots(1000, 1700);
     const timetable = {};
     const venueAvailability = {};
     const programSchedule = {}; // Tracks program schedules
 
     // Initialize timetable and availability
-    const DAYS_LIST = ["Sunday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    const DAYS_LIST = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
     DAYS_LIST.forEach((day) => {
       timetable[day] = {};
       venueAvailability[day] = {};
@@ -212,7 +212,7 @@ const generateTimetable = async () => {
                   courseHoursRemaining[course.course_id] -= 1;
 
                   // Save in the timetable table
-                  await thedb.query(
+                 await thedb.query(
                     "INSERT INTO timetable (day, start_time, end_time, program_id, course_id, teacher_id, venue_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
                     [
                       day,
@@ -224,7 +224,7 @@ const generateTimetable = async () => {
                       venue.venu_id,
                     ]
                   );
-
+                 
                   if (courseHoursRemaining[course.course_id] <= 0) break;
                 }
               }

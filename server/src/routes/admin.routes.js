@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { addprogram, adminsigin, getprogram, graph, logout, timatble } from "../controllers/admin.controllers.js";
+import { addprogram, adminsigin, deletprogram, getprogram, graph, logout, timatble } from "../controllers/admin.controllers.js";
 import { verifyjwt } from "../middlewares/auth.middleware.js";
 import { adminverifyjwt } from "../middlewares/adminauth.middleware.js";
 import { AddVenu, DeleteCourse, generate, GetCoursesList, GetProgramInfo, gettable, GetVenu, submitCourses } from "../controllers/tableInfo.controller.js";
@@ -27,5 +27,5 @@ router.route("/gettable").post(adminverifyjwt,gettable);
 router.route("/graphdata").post(adminverifyjwt,graph);
 router.route("/getteacher").post(adminverifyjwt,getteacher);
 router.route("/deleteteacher").post(adminverifyjwt,deleteatcher);
-
+router.route("/deleteprogram").post(adminverifyjwt,deletprogram)
 export default router

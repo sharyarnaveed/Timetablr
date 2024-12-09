@@ -45,9 +45,21 @@ const getcategory=async()=>
   
   // console.log(gottenprogram.value);
 }
-onMounted(()=>
+
+const deletprogram=async(id)=>
 {
-  getcategory();
+  try {
+    const responce=await axios.post("/api/admin/deleteprogram",{id});
+    console.log(responce.data);
+  } catch (error) {
+    console.log("error in deletion",error);
+  }
+}
+
+
+onMounted(async()=>
+{
+  await getcategory();
 })
 </script>
 
@@ -70,6 +82,7 @@ onMounted(()=>
         <tr v-for="(program, index) in gottenprogram" :key="program.program_id">
           <td>{{ program.program_id }}</td>
           <td>{{ program.program_name }}</td>
+          <td><button @click="deletprogram(program.program_id)">DELETE</button></td>
         </tr>
       </table>
     </div>

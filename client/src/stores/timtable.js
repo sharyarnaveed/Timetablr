@@ -21,7 +21,7 @@ export const useTimetableStore = defineStore("timetable", {
       const currentminutes = now.getMinutes();
       const Totalmins = currenthours * 60 + currentminutes;
 
-      // console.log("All classes:", this.classes);
+      console.log("All classes:", this.classes);
 
       this.currentClass = this.classes.find((c) => {
         const [startHours, startMinutes] = c.start_time.split(":").map(Number);
@@ -30,7 +30,7 @@ export const useTimetableStore = defineStore("timetable", {
         const classStart = startHours * 60 + startMinutes;
         const classEnd = endHours * 60 + endMinutes;
 
-        // console.log(`Checking: Start=${classStart}, End=${classEnd}, Now=${Totalmins}`);
+        console.log(`Checking: Start=${classStart}, End=${classEnd}, Now=${Totalmins}`);
         return Totalmins >= classStart && Totalmins <= classEnd;
       });
 
@@ -42,7 +42,7 @@ export const useTimetableStore = defineStore("timetable", {
       const currentminutes = now.getMinutes();
       const Totalmins = currenthours * 60 + currentminutes;
 
-      // console.log("Finding not current classes. All classes:", this.classes);
+      console.log("Finding not current classes. All classes:", this.classes);
 
       if (!Array.isArray(this.classes)) {
         console.error("this.classes is not an array:", this.classes);
@@ -56,8 +56,10 @@ export const useTimetableStore = defineStore("timetable", {
         // console.log("Class start time in minutes:", classStart);
         return Totalmins < classStart; // Classes after current time
       });
-
+      
       // console.log("Not current classes:", this.notcurrentclass);
     },
+
+
   },
 });

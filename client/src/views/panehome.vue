@@ -1,5 +1,5 @@
 <script setup>
-import { defineAsyncComponent } from "vue";
+import { computed, defineAsyncComponent, watch } from "vue";
 import Speeddail from "@/components/speeddail.vue"
 const infocard = defineAsyncComponent(() =>
   import("@/components/infocard.vue")
@@ -70,7 +70,16 @@ console.log(noclass.value.start_time);
     endtime.value = noclass.value.end_time;
   }
   
+
+
+
+
 });
+
+
+
+
+
 </script>
 <template>
   <main class="homepanelmain">
@@ -339,7 +348,7 @@ gap: 15px;
   }
 
   .speeddiler {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     height: 35%;
   }
   .speeddailcon {
@@ -356,6 +365,7 @@ gap: 15px;
     /* border: 2px solid pink; */
     background-color: transparent;
     width: 5%;
+    cursor: pointer;
     height: 100%;
   }
   .logout img {
@@ -364,7 +374,7 @@ gap: 15px;
   .settings {
     /* border: 2px solid red; */
     height: 100%;
-    width: 35%;
+    width: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -441,11 +451,13 @@ gap: 15px;
     color: black;
     font-family: var(--majorfont);
     display: flex;
+    width: 10%;
+    /* border: 2px solid blue; */
     justify-content: end;
   }
 
   .speeddiler {
-    border: 2px solid red;
+    /* border: 2px solid red; */
     height: 35%;
   }
 }
